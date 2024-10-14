@@ -1,6 +1,5 @@
 // frontend/components/Payroll.jsx
 import React from "react";
-import "../style.css"; // Assuming the path to your CSS is correct
 
 const Payroll = () => {
   return (

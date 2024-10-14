@@ -18,6 +18,9 @@ const Navigation = () => {
           <Link to="/payroll"><i className="fas fa-users"></i> Payroll</Link>
         </li>
         <li className="menu-item">
+          <Link to="/payroll-entry"><i className="fas fa-users"></i> Payroll Entry</Link>
+        </li>
+        <li className="menu-item">
           <Link to="/settings"><i className="fas fa-cog"></i> Settings</Link>
         </li>
         <li className="menu-item">

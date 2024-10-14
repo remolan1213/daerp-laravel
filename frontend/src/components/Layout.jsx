@@ -2,8 +2,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom"; // Outlet will render the matched child route component
 import Navigation from "./Navigation"; // Create this component for your menu
-import Footer from "./Footer"; // Create this component for your footer
-
+import "../style.css";
 const Layout = () => {
   return (
     <div>
