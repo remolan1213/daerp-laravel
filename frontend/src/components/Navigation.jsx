@@ -15,10 +15,10 @@ const Navigation = () => {
           <Link to="/profile"><i className="fas fa-users"></i> Profile</Link>
         </li>
         <li className="menu-item">
-          <Link to="/payroll"><i className="fa-solid fa-money-check-dollar"></i> Payroll</Link>
+          <Link to="/payroll"><i className="fas fa-money-check"></i> Payroll</Link>
         </li>
         <li className="menu-item">
-          <Link to="/dataentry"><i className="fas fa-chart-bar"></i> Data Entry</Link>
+          <Link to="/dataentry"><i className="fas fa-database"></i> Data Entry</Link>
         </li>
         <li className="menu-item">
           <Link to="/settings"><i className="fas fa-cog"></i> Settings</Link>

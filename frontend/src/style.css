@@ -178,12 +178,12 @@ main {
 
 .name,
 .department {
-  width: 220px;
+  width: 180px;
 }
 
 .id-number,
 .payroll-period {
-  width: 150px;
+  width: 180px;
 }
 
 .bank-account,
