@@ -5,7 +5,8 @@ import Home from './components/Home'; // Adjust the path if necessary
 import Profile from './components/Profile'; // Adjust the path if necessary
 import Payroll from './components/Payroll'; // Adjust the path if necessary
 import Settings from './components/Settings'; // Adjust the path if necessary
-
+import Dataentry from './components/Dataentry';
+import './style.css'; // Adjust the path if necessary for your styles
 const App = () => {
     return (
         <Routes>

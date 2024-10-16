@@ -1,0 +1,8 @@
+{
+    "type": "sqlite",
+    "database": "data/db.sqlite",   
+    "entities": ["src/entity/*.js"],
+    "synchronize": true              
+  }
+  
+  

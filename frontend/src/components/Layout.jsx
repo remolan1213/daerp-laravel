@@ -2,7 +2,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom"; // Outlet will render the matched child route component
 import Navigation from "./Navigation"; // Create this component for your menu
-import "../style.css";
+
 const Layout = () => {
   return (
     <div>
