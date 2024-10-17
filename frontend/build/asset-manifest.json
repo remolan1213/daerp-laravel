@@ -1,13 +1,14 @@
 {
   "files": {
-    "main.css": "/static/css/main.b3f08904.css",
-    "main.js": "/static/js/main.3dbe7c24.js",
+    "main.css": "/static/css/main.6876534e.css",
+    "main.js": "/static/js/main.362b1f49.js",
+    "static/media/da-logo4.svg": "/static/media/da-logo4.9288cf3f6438e220d13299905fd6b0c6.svg",
     "index.html": "/index.html",
-    "main.b3f08904.css.map": "/static/css/main.b3f08904.css.map",
-    "main.3dbe7c24.js.map": "/static/js/main.3dbe7c24.js.map"
+    "main.6876534e.css.map": "/static/css/main.6876534e.css.map",
+    "main.362b1f49.js.map": "/static/js/main.362b1f49.js.map"
   },
   "entrypoints": [
-    "static/css/main.b3f08904.css",
-    "static/js/main.3dbe7c24.js"
+    "static/css/main.6876534e.css",
+    "static/js/main.362b1f49.js"
   ]
 }
