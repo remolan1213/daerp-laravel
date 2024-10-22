@@ -1,14 +1,11 @@
-import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome } from '@fortawesome/free-solid-svg-icons';
+import React from "react";
 
-const TestIcon = () => {
+const Logout = () => {
   return (
     <div>
-      <FontAwesomeIcon icon={faHome} />
-      <p>Test Home Icon</p>
+      <h1>You have been logged out</h1>
     </div>
   );
 };
 
-export default TestIcon;
+export default Logout;
