@@ -2,12 +2,12 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 
 import Layout from "./components/Layout";
-import Home from "./components/Home"; // Adjust the path if necessary
-import Profile from "./components/Profile"; // Adjust the path if necessary
-import Payroll from "./components/Payroll"; // Adjust the path if necessary
-import Settings from "./components/Settings"; // Adjust the path if necessary
-import Dataentry from "./components/Dataentry";
-import Logout from "./components/Logout";
+import Home from "./pages/Home"; // Adjust the path if necessary
+import Profile from "./pages/Profile"; // Adjust the path if necessary
+import Payroll from "./pages/Payroll"; // Adjust the path if necessary
+import Settings from "./pages/Settings"; // Adjust the path if necessary
+import Dataentry from "./pages/Dataentry";
+import Logout from "./pages/Logout";
 import "./style.css"; // Adjust the path if necessary for your styles
 const App = () => {
   return (
