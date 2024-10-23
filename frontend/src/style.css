@@ -7,7 +7,7 @@
 
 main {
   min-height: 100vh;
-  background: linear-gradient(to right top, #0e4f8b, #042d63de); 
+  background: linear-gradient(to right top, #0e4f8b, #042d63de);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -19,14 +19,16 @@ main {
   flex-direction: row;
   min-height: 90vh;
   width: 90vw;
-  background: linear-gradient(to right bottom,
-      rgba(255, 255, 255, 0.7),
-      rgba(255, 255, 255, 0.3));
+  background: linear-gradient(
+    to right bottom,
+    rgba(255, 255, 255, 0.7),
+    rgba(255, 255, 255, 0.3)
+  );
   border-radius: 7px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
-font-size: .9rem;
+  font-size: 0.9rem;
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
@@ -34,12 +36,14 @@ font-size: .9rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(to right bottom,
-      rgba(255, 255, 255, 0.274),
-      rgba(255, 255, 255, 0.349));
+  background: linear-gradient(
+    to right bottom,
+    rgba(255, 255, 255, 0.274),
+    rgba(255, 255, 255, 0.349)
+  );
   padding-top: 30px;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
   border-top-left-radius: 7px;
   border-bottom-left-radius: 7px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -54,11 +58,11 @@ font-size: .9rem;
   align-items: center;
   justify-content: flex-end;
   padding-bottom: 20px;
-  padding-left: 10px;
-  padding-right: 10px;
-
+  padding-left: 5px;
+  padding-right: 5px;
   height: 100%;
-} 
+  width: 170px;
+}
 
 .logo {
   width: 150px;
@@ -71,7 +75,7 @@ font-size: .9rem;
 }
 
 .menu-item {
-  padding-left: 25px;
+  padding-left: 5px;
   width: 100%;
 }
 
@@ -84,7 +88,7 @@ font-size: .9rem;
 
 .menu-item.active,
 .menu-item:hover {
-  padding-left: 40px;
+  padding-left: 10px;
   background-color: #495057;
   border-left: 5px solid #17a2b8;
 }
@@ -99,17 +103,17 @@ font-size: .9rem;
   height: 15px;
 }
 
-
-
 .card {
   color: #006994;
   border-radius: 7px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
-  background: linear-gradient(to right bottom,
-      rgba(255, 255, 255, 0.7),
-      rgba(255, 255, 255, 0.3));
+  background: linear-gradient(
+    to right bottom,
+    rgba(255, 255, 255, 0.7),
+    rgba(255, 255, 255, 0.3)
+  );
   border: 1px solid rgba(255, 255, 255, 0.3);
   margin-top: 10px;
   margin-left: 10px;
@@ -237,8 +241,9 @@ font-size: .9rem;
 }
 
 footer {
-
   width: 100%;
   text-align: center;
-  background-color: orange;
+}
+footer p {
+  margin: 0 !important;
 }
