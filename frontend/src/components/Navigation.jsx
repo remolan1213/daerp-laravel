@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import Logo from './Logo'; // Import the Logo component
 
 import { faHome, faUser, faCog, faMoneyCheck, faSignOut,faDatabase} from '@fortawesome/free-solid-svg-icons';
@@ -16,6 +16,7 @@ const Navigation = () => {
         <MenuItem to="/dataentry" icon={faDatabase} label="Data Entry" />
         <MenuItem to="/settings" icon={faCog} label="Settings" />
         <MenuItem to="/logout" icon={faSignOut} label="Logout" />
+        <MenuItem to="/testing" icon={faDatabase} label="Testing" />
       </ul>
       <div className='menu-footer'>
         <Footer />
