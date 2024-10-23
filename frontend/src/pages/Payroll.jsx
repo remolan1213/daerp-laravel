@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "../style.css"; // Assuming the path to your CSS is correct
+// import "../style.css"; // Assuming the path to your CSS is correct
 
 const Payroll = () => {
   // Define the state to hold payroll data

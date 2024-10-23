@@ -1,9 +1,15 @@
-// import React from 'react';
-import Logo from './Logo'; // Import the Logo component
+import Logo from "./Logo"; // Import the Logo component
 
-import { faHome, faUser, faCog, faMoneyCheck, faSignOut,faDatabase} from '@fortawesome/free-solid-svg-icons';
-import MenuItem from './MenuItem'; // Import the MenuItem component
-import Footer from './Footer'; // Import the Footer component
+import {
+  faHome,
+  faUser,
+  faCog,
+  faMoneyCheck,
+  faSignOut,
+  faDatabase,
+} from "@fortawesome/free-solid-svg-icons";
+import MenuItem from "./MenuItem"; // Import the MenuItem component
+import Footer from "./Footer"; // Import the Footer component
 
 const Navigation = () => {
   return (
@@ -18,7 +24,7 @@ const Navigation = () => {
         <MenuItem to="/logout" icon={faSignOut} label="Logout" />
         <MenuItem to="/testing" icon={faDatabase} label="Testing" />
       </ul>
-      <div className='menu-footer'>
+      <div className="menu-footer">
         <Footer />
       </div>
     </div>
