@@ -18,7 +18,7 @@ main {
   display: flex;
   flex-direction: row;
   min-height: 90vh;
-  width: 90%;
+  width: 90vw;
   background: linear-gradient(to right bottom,
       rgba(255, 255, 255, 0.7),
       rgba(255, 255, 255, 0.3));
@@ -239,7 +239,7 @@ font-size: .9rem;
 footer {
   width: 100%;
   text-align: center;
-  /* Center the text */
-  /* padding: 5px; */
-  /* Add some padding */
+ 
+  /* Center the text */ 
+  background-color: orange;
 }
