@@ -69,13 +69,9 @@ main {
   margin-bottom: 20px;
 }
 
-.menu {
-  list-style: none;
-  width: 100%;
-}
-
 .menu-item {
-  padding-left: 5px;
+  list-style: none;
+  padding-left: 32px;
   width: 100%;
 }
 
@@ -88,7 +84,7 @@ main {
 
 .menu-item.active,
 .menu-item:hover {
-  padding-left: 10px;
+  padding-left: 35px;
   background-color: #495057;
   border-left: 5px solid #17a2b8;
 }

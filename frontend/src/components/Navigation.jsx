@@ -15,7 +15,6 @@ const Navigation = () => {
   return (
     <div className="menu-sidebar">
       <Logo /> {/* Use Logo component */}
-      <ul className="menu">
         <MenuItem to="/" icon={faHome} label="Home" />
         <MenuItem to="/profile" icon={faUser} label="Profile" />
         <MenuItem to="/payroll" icon={faMoneyCheck} label="Payroll" />
@@ -23,7 +22,6 @@ const Navigation = () => {
         <MenuItem to="/settings" icon={faCog} label="Settings" />
         <MenuItem to="/logout" icon={faSignOut} label="Logout" />
         <MenuItem to="/testing" icon={faDatabase} label="Testing" />
-      </ul>
       <div className="menu-footer">
         <Footer />
       </div>
