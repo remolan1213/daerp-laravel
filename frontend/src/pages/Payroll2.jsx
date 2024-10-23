@@ -1,5 +1,5 @@
 // frontend/components/Payroll.jsx
-import React from "react";
+// import React from "react";
 
 const Payroll = () => {
   return (

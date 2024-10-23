@@ -7,7 +7,7 @@
 
 main {
   min-height: 100vh;
-  background: linear-gradient(to right top, #0e4f8b, #042d63de);
+  background: linear-gradient(to right top, #0e4f8b, #042d63de); 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -26,7 +26,7 @@ main {
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
-
+font-size: .9rem;
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
@@ -53,13 +53,12 @@ main {
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-
   padding-bottom: 20px;
   padding-left: 10px;
   padding-right: 10px;
 
   height: 100%;
-}
+} 
 
 .logo {
   width: 150px;
@@ -79,7 +78,6 @@ main {
 .menu-item a {
   text-decoration: none;
   color: #000000;
-  font-size: 0.9rem;
   transition: 0.3s;
   width: 100%;
 }
@@ -101,22 +99,7 @@ main {
   height: 15px;
 }
 
-.content {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  flex: 1;
-  font-size: 0.9rem;
-  margin-top: 20px;
-  margin-left: 20px;
-}
 
-.content-title {
-  color: #006994;
-  width: 100%;
-  text-align: center;
-}
 
 .card {
   color: #006994;
@@ -257,7 +240,6 @@ footer {
   width: 100%;
   text-align: center;
   /* Center the text */
-  padding: 5px;
-  font-size: .9rem;
+  /* padding: 5px; */
   /* Add some padding */
 }
