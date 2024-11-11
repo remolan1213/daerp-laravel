@@ -7,15 +7,12 @@
     "start": "node --watch index.js"
   },
   "keywords": [],
-  "author": "ROlando L. Lanugon",
+  "author": "Rolando L. Lanugon",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.0.1",
-    "express": "^4.19.2",
+    "express": "^4.21.1",
     "sqlite3": "^5.1.7",
     "typeorm": "^0.3.20"
-  },
-  "devDependencies": {
-    "@types/node": "^20.14.1"
   }
 }

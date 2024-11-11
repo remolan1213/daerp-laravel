@@ -1,18 +1,18 @@
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
+import Button from "react-bootstrap/Button";
+import Card from "../components/Card";
 
 const Logout = () => {
   return (
-    <Card style={{ width: '18rem' }}>
-      
-      <Card.Body>
-        <Card.Title bg="dark">Card Title</Card.Title>
-        <Card.Text>
-          Some quick example text to build on the card title and make up the
-          bulk of the card's content.
-        </Card.Text>
-        <Button variant="primary" size="sm">Go somewhere</Button>
-      </Card.Body>
+    <Card title={"Logout"}>
+      <p>Are you sure you want to logout?</p>
+      <div className="button-container">
+        <Button variant="dark" size="sm" className="w-25 mb-3">
+          Ok
+        </Button>
+        <Button variant="danger" size="sm" className="w-25 mb-3">
+          Cancel
+        </Button>
+      </div>
     </Card>
   );
 };

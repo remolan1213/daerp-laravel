@@ -2,10 +2,10 @@
 
 const Footer = () => {
     return (
-        <footer>
-            <p>© Genesis</p>
-            <p>© 2024 DreamArchers</p>
-            <p>All rights reserved.</p>
+        <footer style={{ textAlign: "center", width: "100%" }}>
+            <p style={{margin: "0"}}>© Genesis</p>
+            <p style={{margin: "0"}}>© 2024 DreamArchers</p>
+            <p style={{margin: "0"}}>All rights reserved.</p>
         </footer>
     );
 };

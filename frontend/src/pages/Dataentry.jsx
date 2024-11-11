@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Button from "react-bootstrap/esm/Button";
 
 const Dataentry = () => {
   // Define the state to hold form input values
@@ -161,7 +162,7 @@ const Dataentry = () => {
               onChange={handleInputChange}
             />
           </div>
-          <button type="submit">Submit Payroll</button>
+          <Button variant="primary" size="sm" className="mt-3 mb-3">Submit Payroll</Button>
         </form>
       </div>
     </div>

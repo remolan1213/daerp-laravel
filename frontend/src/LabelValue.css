@@ -1,15 +1,19 @@
 /* LabelValue.css */
 .label-value {
-    margin-bottom: 12px; /* Space between items */
-    padding: 8px;
+   
+    /* background-color:yellow; */
+ 
   }
   
   .label-value-label {
     font-weight: bold;
     margin: 0;
+    padding-left: 10px;
+    padding-right: 10px;
+    /* background-color: red; */
   }
   
   .label-value-text {
-    margin: 4px 0 0;
+    /* background-color: blue; */
   }
   

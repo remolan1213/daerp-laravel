@@ -1,3 +1,6 @@
+:root { 
+  --title-bar-color: #006994;
+}
 * {
   font-family: "Poppins", sans-serif;
   box-sizing: border-box;
@@ -10,8 +13,7 @@ main {
   background: linear-gradient(to right top, #0e4f8b, #042d63de);
   display: flex;
   align-items: center;
-  justify-content: center;
-  position: relative;
+  justify-content: center; 
 }
 
 .glass {
@@ -72,6 +74,10 @@ main {
 .menu-item {
   list-style: none;
   padding-left: 32px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+  margin-top: 5px;
   width: 100%;
 }
 
@@ -87,6 +93,10 @@ main {
   padding-left: 35px;
   background-color: #495057;
   border-left: 5px solid #17a2b8;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+  margin-top: 5px;
 }
 
 .menu-item:hover a {
@@ -99,6 +109,13 @@ main {
   height: 15px;
 }
 
+.content {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr 1fr 1fr auto;
+  grid-template-rows: 1fr 1fr auto;
+  background-color: orange;
+}
 .card {
   color: #006994;
   border-radius: 7px;
@@ -236,10 +253,10 @@ main {
   margin-left: 5px;
 }
 
-footer {
+/* footer {
   width: 100%;
   text-align: center;
-}
+}*/
 footer p {
   margin: 0 !important;
-}
+} 

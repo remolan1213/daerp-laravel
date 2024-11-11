@@ -1,25 +1,30 @@
 const express = require("express");
-const path = require("path");
+const { DataSource } = require("typeorm");
 const app = express();
+const workerRoutes = require("./src/routes/workerRoutes");
+const payrollRoutes = require("./src/routes/payrollRoutes");
 
-// Serve static files from the React app's build folder
-app.use(express.static(path.join(__dirname, "../frontend/build")));
+// Middleware to parse JSON request bodies
+app.use(express.json());  // This will automatically parse incoming JSON
 
-// API routes - keep these for your backend functionality
-// Example: app.get("/api/users", ... )
-app.get("/payroll", (req, res) => {
-    res.json({ message: "There's no such thing as payroll." });
-  });
-
-// Catch-all route to serve React's index.html for any other routes
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/build", "index.html"));
+// Initialize the database connection
+const AppDataSource = new DataSource({
+  type: "sqlite",
+  database: "data/db.sqlite",
+  entities: [require("./src/entity/Worker"), require("./src/entity/Payroll")],
+  logging: false,
 });
 
-// Global error handling middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send("Internal Server Error");
-});
-
-module.exports = app;
+const initializeDataSource = async () => {
+ try {
+   await AppDataSource.initialize();
+   console.log("Database connected!!");
+ } catch (error) {
+   console.error("Error during Data Source initialization:", error);
+ }
+};
+// Register routes
+app.use('/api/workers', workerRoutes(AppDataSource));
+app.use('/api/payrolls', payrollRoutes(AppDataSource));
+// Export AppDataSource so it can be used in the controller
+module.exports = { app, AppDataSource, initializeDataSource };

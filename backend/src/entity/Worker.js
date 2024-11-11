@@ -12,7 +12,8 @@ module.exports = new EntitySchema({
       type: 'varchar'
     },
     idNumber: {
-      type: 'varchar'
+      type: 'varchar',
+      unique: true
     },
     department: {
       type: 'varchar'
