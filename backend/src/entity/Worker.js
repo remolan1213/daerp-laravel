@@ -8,7 +8,13 @@ module.exports = new EntitySchema({
       type: 'int',
       generated: true
     },
-    name: {
+    firstname: {
+      type: 'varchar'
+    },
+    lastname: {
+      type: 'varchar'
+    },
+    middlename: {
       type: 'varchar'
     },
     idNumber: {
@@ -17,6 +23,12 @@ module.exports = new EntitySchema({
     },
     department: {
       type: 'varchar'
+    },
+    // The fullName column is a virtual one, calculated from firstname, middlename, and lastname
+    fullName: {
+      type: 'varchar',
+      generated: 'always',
+      asExpression: "(firstname || ' ' || middlename || '. ' || lastname)"
     }
   },
   relations: {
