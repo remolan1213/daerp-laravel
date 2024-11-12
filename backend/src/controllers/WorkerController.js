@@ -1,9 +1,14 @@
 const Worker = require("../entity/Worker"); // Entity schema
-require("typeorm"); // Assuming AppDataSource is an instance of DataSource
 const { ILike } = require("typeorm");
-const createWorker = async (req, res, AppDataSource) => {
-  const { name, idNumber, department } = req.body;
 
+const createWorker = async (req, res, AppDataSource) => {
+  const { firstname, middlename, lastname, idNumber, department, bankAccount } =
+    req.body;
+
+  // Ensure all required fields are provided
+  if (!firstname || !middlename || !lastname || !idNumber || !department || !bankAccount) {
+    return res.status(400).json({ message: "Missing required fields" });
+  }
   try {
     const workerRepository = AppDataSource.getRepository(Worker);
 
@@ -19,9 +24,12 @@ const createWorker = async (req, res, AppDataSource) => {
 
     // Create a new worker object
     const worker = workerRepository.create({
-      name,
+      firstname,
+      lastname,
+      middlename,
       idNumber,
       department,
+      bankAccount,
     });
 
     // Save the new worker to the database
@@ -52,7 +60,7 @@ const getWorkerByidNumber = async (req, res, AppDataSource) => {
     const worker = await workerRepository.findOne({ where: { idNumber } });
 
     if (!worker) {
-      return res.status(404).json({ message: "Worker not found 1" });
+      return res.status(404).json({ message: "Worker not found" });
     }
 
     res.status(200).json(worker);
@@ -62,7 +70,6 @@ const getWorkerByidNumber = async (req, res, AppDataSource) => {
   }
 };
 
-// Get worker with their payrolls
 const getWorkerWithPayrolls = async (req, res, AppDataSource) => {
   const { idNumber } = req.params;
 
@@ -89,19 +96,22 @@ const getWorkerWithPayrolls = async (req, res, AppDataSource) => {
 
 const updateWorker = async (req, res, AppDataSource) => {
   const { idNumber } = req.params;
-  const { name, department } = req.body;
+  const { firstname, lastname, middlename, department, bankAccount } = req.body;
 
   try {
     const workerRepository = AppDataSource.getRepository(Worker);
-    const worker = await workerRepository.findOne({ where: { id } });
+    const worker = await workerRepository.findOne({ where: { idNumber } });
 
     if (!worker) {
-      return res.status(404).json({ message: "Worker not found 2" });
+      return res.status(404).json({ message: "Worker not found" });
     }
 
-    worker.name = name || worker.name;
-    worker.idNumber = idNumber || worker.idNumber;
+    // Update fields if provided in request body
+    worker.firstname = firstname || worker.firstname;
+    worker.lastname = lastname || worker.lastname;
+    worker.middlename = middlename || worker.middlename;
     worker.department = department || worker.department;
+    worker.bankAccount = bankAccount || worker.bankAccount;
 
     const updatedWorker = await workerRepository.save(worker);
     res.status(200).json(updatedWorker);
@@ -116,10 +126,10 @@ const deleteWorker = async (req, res, AppDataSource) => {
 
   try {
     const workerRepository = AppDataSource.getRepository(Worker);
-    const worker = await workerRepository.findOne({ where: { id } });
+    const worker = await workerRepository.findOne({ where: { idNumber } });
 
     if (!worker) {
-      return res.status(404).json({ message: "Worker not found 3" });
+      return res.status(404).json({ message: "Worker not found" });
     }
 
     await workerRepository.remove(worker);
@@ -130,7 +140,7 @@ const deleteWorker = async (req, res, AppDataSource) => {
   }
 };
 
-// Search Workers by Name (exact match or partial match)
+// Search Workers by partial or full name match
 const searchByName = async (req, res, AppDataSource) => {
   const { name } = req.query; // get the name from the query parameter
 
@@ -141,11 +151,13 @@ const searchByName = async (req, res, AppDataSource) => {
   try {
     const workerRepository = AppDataSource.getRepository(Worker);
 
-    // Search workers by name (using "LIKE" for partial match)
+    // Search workers by partial match on first, middle, or last name
     const workers = await workerRepository.find({
-      where: {
-        name: ILike(`%${name}%`), // Partial match search (case-insensitive)
-      },
+      where: [
+        { firstname: ILike(`%${name}%`) },
+        { lastname: ILike(`%${name}%`) },
+        { middlename: ILike(`%${name}%`) },
+      ],
     });
 
     if (workers.length === 0) {

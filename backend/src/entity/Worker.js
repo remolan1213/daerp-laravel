@@ -1,41 +1,49 @@
-const { EntitySchema } = require('typeorm');
+const { EntitySchema } = require("typeorm");
 
 module.exports = new EntitySchema({
-  name: 'Worker', // Name of the entity
+  name: "Worker", // Name of the entity
   columns: {
     id: {
       primary: true,
-      type: 'int',
-      generated: true
+      type: "int",
+      generated: true,
     },
     firstname: {
-      type: 'varchar'
-    },
-    lastname: {
-      type: 'varchar'
+      type: "varchar",
     },
     middlename: {
-      type: 'varchar'
+      type: "varchar",
+      nullable: true, // Allow nulls if middlename isn't always present
     },
+    lastname: {
+      type: "varchar",
+    },
+
     idNumber: {
-      type: 'varchar',
-      unique: true
+      type: "varchar",
+      unique: true,
     },
     department: {
-      type: 'varchar'
+      type: "varchar",
     },
-    // The fullName column is a virtual one, calculated from firstname, middlename, and lastname
-    fullName: {
-      type: 'varchar',
-      generated: 'always',
-      asExpression: "(firstname || ' ' || middlename || '. ' || lastname)"
-    }
+    bankAccount: {
+      type: "varchar",
+    },
   },
   relations: {
     payrolls: {
-      type: 'one-to-many',
-      target: 'Payroll',    // Refers to the 'Payroll' entity
-      inverseSide: 'worker' // Inverse relation from Payroll
-    }
-  }
+      type: "one-to-many",
+      target: "Payroll", // Refers to the 'Payroll' entity
+      inverseSide: "worker", // Inverse relation from Payroll
+    },
+  },
+  // Define a virtual property for `fullName`
+  // Calculated from `firstname`, `middlename`, and `lastname`
+  getters: {
+    fullName() {
+      return `${this.firstname} ${
+        this.middlename ? this.middlename + " " : ""
+      }${this.lastname}`;
+    },
+  },
 });
