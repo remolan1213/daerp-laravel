@@ -18,10 +18,11 @@ const Navigation = () => {
         <MenuItem to="/" icon={faHome} label="Home" />
         <MenuItem to="/profile" icon={faUser} label="Profile" />
         <MenuItem to="/payroll" icon={faMoneyCheck} label="Payroll" />
-        <MenuItem to="/dataentry" icon={faDatabase} label="Data Entry" />
+        <MenuItem to="/payrolladd" icon={faDatabase} label="Payroll Add" />
+        <MenuItem to="/personadd" icon={faDatabase} label="Person Add" />
         <MenuItem to="/settings" icon={faCog} label="Settings" />
         <MenuItem to="/logout" icon={faSignOut} label="Logout" />
-        <MenuItem to="/testing" icon={faDatabase} label="Testing" />
+        
       <div className="menu-footer">
         <Footer />
       </div>

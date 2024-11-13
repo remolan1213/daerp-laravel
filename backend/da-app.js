@@ -1,9 +1,11 @@
+const cors = require('cors');
 const express = require("express");
 const { DataSource } = require("typeorm");
 const app = express();
 const workerRoutes = require("./src/routes/workerRoutes");
 const payrollRoutes = require("./src/routes/payrollRoutes");
 
+app.use(cors()); 
 // Middleware to parse JSON request bodies
 app.use(express.json());  // This will automatically parse incoming JSON
 

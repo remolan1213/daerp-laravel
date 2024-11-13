@@ -130,7 +130,7 @@ main {
   border: 1px solid rgba(255, 255, 255, 0.3);
   margin-top: 10px;
   margin-left: 10px;
-  text-align: center;
+  /* text-align: center; */
 }
 
 .card-title-bar {
