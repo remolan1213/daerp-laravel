@@ -1,0 +1,25 @@
+# Node.js dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Environment variable files
+.env
+
+# Logs
+logs/
+*.log
+
+# Temporary files
+*.pid
+*.seed
+*.swp
+
+# TypeORM migration files
+backend/src/migration/*
+
+# SQLite database files
+data/db.sqlite
+
+
