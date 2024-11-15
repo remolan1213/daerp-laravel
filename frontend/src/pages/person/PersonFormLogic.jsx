@@ -25,7 +25,7 @@ const PersonFormLogic = ({ setMessage }) => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:4000/api/Persons/", {
+      const response = await fetch(import.meta.env.VITE_WORKERS, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
