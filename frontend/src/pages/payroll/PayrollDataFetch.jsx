@@ -1,8 +1,8 @@
-// PayrollContainer.js
+// PayrollDataFetch.js
 import { useEffect, useState } from "react";
 import PayrollDisplay from "./PayrollDisplay"; // Import the presentational component
 
-const PayrollContainer = () => {
+const PayrollDataFetch = () => {
   const [payrollData, setPayrollData] = useState({
     name: "Jake Gaviola",
     idNumber: "2020-0105-005",
@@ -33,4 +33,4 @@ const PayrollContainer = () => {
   return <PayrollDisplay payrollData={payrollData} />;
 };
 
-export default PayrollContainer;
+export default PayrollDataFetch;
