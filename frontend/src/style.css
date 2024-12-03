@@ -255,8 +255,31 @@ main {
 
 /* footer {
   width: 100%;
-  text-align: center;
-}*/
+  text-align: center;*/
 footer p {
   margin: 0 !important;
 } 
+
+.payroll-table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: auto;
+}
+
+.payroll-table th, .payroll-table td {
+  border: 1px solid #cfc7c7;
+  padding: 4px;
+  color: black;
+}
+
+.payroll-table th {
+  background-color: #fcf8f8;
+  color: inherit;
+}
+
+.payroll-table th, .payroll-table td {
+  text-align: left;
+}
+.payroll-table td.spacer {
+  text-align: right;
+}

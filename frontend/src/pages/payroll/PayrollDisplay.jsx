@@ -1,72 +1,73 @@
 // PayrollDisplay.js
 const PayrollDisplay = ({ payrollData }) => {
-    return (
-      <div className="card text-center">
-        <div className="card-title-bar">Payroll</div>
-        <div className="basic-data">
-          <div className="name">
-            Name:
-            <div className="name-value">{payrollData.name}</div>
-          </div>
-          <div className="id-number">
-            ID Number:
-            <div className="id-number-value">{payrollData.idNumber}</div>
-          </div>
-          <div className="bank-account">
-            Bank Account:
-            <div className="bank-account-value">{payrollData.bankAccount}</div>
-          </div>
-        </div>
-        <div className="basic-data-2">
-          <div className="department">
-            Department:
-            <div className="department-value">{payrollData.department}</div>
-          </div>
-          <div className="payroll-period">
-            Payroll Period:
-            <div className="payroll-period-value">{payrollData.payrollPeriod}</div>
-          </div>
-          <div className="payroll-date">
-            Payroll Date:
-            <div className="payroll-date-value">{payrollData.payrollDate}</div>
-          </div>
-        </div>
-        <div className="payroll-data">
-          <div className="client">
-            Client:
-            <div className="client-value">{payrollData.client}</div>
-            <div className="client-value">{payrollData.client2}</div>
-          </div>
-          <div className="gross-amount">
-            Gross:
-            <div className="gross-amount-value">{payrollData.grossAmount}</div>
-            <div className="gross-amount-value">{payrollData.grossAmount2}</div>
-          </div>
-          <div className="net-amount">
-            Net:
-            <div className="net-amount-value">{payrollData.netAmount}</div>
-            <div className="net-amount-value">{payrollData.netAmount2}</div>
-          </div>
-        </div>
-        <div className="deductions-data">
-          <div className="deductions">
-            Deductions:
-            <div className="description">{payrollData.deductions}</div>
-          </div>
-          <div className="deduction-amount">
-            Amount:
-            <div className="deductions-value">{payrollData.deductionAmount}</div>
-          </div>
-        </div>
-        <div className="total-data">
-          <div className="total">
-            Total:
-            <div className="total-value">{payrollData.totalAmount}</div>
-          </div>
-        </div>
-      </div>
-    );
-  };
-  
-  export default PayrollDisplay;
-  
+  return (
+    <div className="card text-center">
+      <div className="card-title-bar">Payroll</div>
+      <table className="payroll-table">
+        <tbody>
+          <tr>
+            <th>Name</th>
+            <td>{payrollData.name}</td>
+            <th>Bank Account</th>
+            <td>{payrollData.bankAccount}</td>
+            <th>ID Number</th>
+            <td>{payrollData.idNumber}</td>
+          </tr>
+          <tr>
+            <th>Payroll Period</th>
+            <td>{payrollData.payrollPeriod}</td>
+            <th>Department</th>
+            <td>{payrollData.department}</td>
+            <th>Payroll Date</th>
+            <td>{payrollData.payrollDate}</td>
+          </tr>
+          <tr></tr>
+          <tr>
+            <th>Client</th>
+            <td>{payrollData.client}</td>
+            <th>Gross</th>
+            <td className="spacer">{payrollData.grossAmount}</td>
+            <th>Net</th>
+            <td className="spacer">{payrollData.netAmount}</td>
+          </tr>
+          <tr>
+            <th></th>
+            <td>{payrollData.client2}</td>
+            <th></th>
+            <td className="spacer">{payrollData.grossAmount2}</td>
+            <th></th>
+            <td className="spacer">{payrollData.netAmount2}</td>
+            <td></td>
+          </tr>
+          <tr></tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <th>Deductions</th>
+            <td>{payrollData.deductions}</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <th>Amount</th>
+            <td className="spacer">{payrollData.deductionAmount}</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <th>Total Amount</th>
+            <td className="spacer">{payrollData.totalAmount}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+export default PayrollDisplay;

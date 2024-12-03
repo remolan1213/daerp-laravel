@@ -1,50 +1,50 @@
-const Worker = require("../entity/Worker"); // Entity schema
-const { ILike } = require("typeorm");
+import AppDataSource from '../data-source.js';
+import Worker from '../entities/Worker.js';
+import WorkerNames from '../entities/WorkerNames.js';
+import { ILike } from 'typeorm';
 
-const createWorker = async (req, res, AppDataSource) => {
-  const { firstname, middlename, lastname, idNumber, department, bankAccount } =
-    req.body;
+export const createWorker = async (req, res) => {
+  const { idNumber, department, bankAccount, names } = req.body;
 
-  // Ensure all required fields are provided
-  if (!firstname || !middlename || !lastname || !idNumber || !department || !bankAccount) {
+  if (!idNumber || !department || !bankAccount || !names) {
     return res.status(400).json({ message: "Missing required fields" });
   }
+
   try {
     const workerRepository = AppDataSource.getRepository(Worker);
+    const workerNamesRepository = AppDataSource.getRepository(WorkerNames);
 
-    // Check if the worker already exists with the given idNumber
-    const existingWorker = await workerRepository.findOne({
-      where: { idNumber },
-    });
+    const existingWorker = await workerRepository.findOne({ where: { idNumber } });
     if (existingWorker) {
       return res
         .status(400)
         .json({ message: "Worker with this ID number already exists" });
     }
 
-    // Create a new worker object
     const worker = workerRepository.create({
-      firstname,
-      lastname,
-      middlename,
       idNumber,
       department,
       bankAccount,
     });
 
-    // Save the new worker to the database
     const newWorker = await workerRepository.save(worker);
-    res.status(201).json(newWorker);
+
+    const workerNames = names.map((name) =>
+      workerNamesRepository.create({ ...name, worker: newWorker })
+    );
+    await workerNamesRepository.save(workerNames);
+
+    res.status(201).json({ ...newWorker, names: workerNames });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error creating worker", error });
   }
 };
 
-const getWorkers = async (req, res, AppDataSource) => {
+export const getWorkers = async (req, res) => {
   try {
     const workerRepository = AppDataSource.getRepository(Worker);
-    const workers = await workerRepository.find();
+    const workers = await workerRepository.find({ relations: ["names"] });
     res.status(200).json(workers);
   } catch (error) {
     console.error(error);
@@ -52,12 +52,15 @@ const getWorkers = async (req, res, AppDataSource) => {
   }
 };
 
-const getWorkerByidNumber = async (req, res, AppDataSource) => {
+export const getWorkerByidNumber = async (req, res) => {
   const { idNumber } = req.params;
 
   try {
     const workerRepository = AppDataSource.getRepository(Worker);
-    const worker = await workerRepository.findOne({ where: { idNumber } });
+    const worker = await workerRepository.findOne({
+      where: { idNumber },
+      relations: ["names"],
+    });
 
     if (!worker) {
       return res.status(404).json({ message: "Worker not found" });
@@ -70,21 +73,20 @@ const getWorkerByidNumber = async (req, res, AppDataSource) => {
   }
 };
 
-const getWorkerWithPayrolls = async (req, res, AppDataSource) => {
+export const getWorkerWithPayrolls = async (req, res) => {
   const { idNumber } = req.params;
 
   try {
     const workerRepository = AppDataSource.getRepository(Worker);
     const worker = await workerRepository.findOne({
       where: { idNumber },
-      relations: ["payrolls"], // Include payrolls in the result
+      relations: ["payrolls", "names"],
     });
 
     if (!worker) {
       return res.status(404).json({ message: "Worker not found" });
     }
 
-    // Send back worker with their payrolls
     res.status(200).json(worker);
   } catch (error) {
     console.error(error);
@@ -94,45 +96,73 @@ const getWorkerWithPayrolls = async (req, res, AppDataSource) => {
   }
 };
 
-const updateWorker = async (req, res, AppDataSource) => {
+export const getWorkersWithPayroll = async (req, res) => {
   const { idNumber } = req.params;
-  const { firstname, lastname, middlename, department, bankAccount } = req.body;
 
   try {
     const workerRepository = AppDataSource.getRepository(Worker);
-    const worker = await workerRepository.findOne({ where: { idNumber } });
+    const worker = await workerRepository.findOne({
+      where: { idNumber },
+      relations: ["payrolls", "names"],
+    });
 
     if (!worker) {
       return res.status(404).json({ message: "Worker not found" });
     }
 
-    // Update fields if provided in request body
-    worker.firstname = firstname || worker.firstname;
-    worker.lastname = lastname || worker.lastname;
-    worker.middlename = middlename || worker.middlename;
+    res.status(200).json(worker);
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ message: "Error fetching worker with payrolls", error });
+  }
+};
+
+export const updateWorker = async (req, res) => {
+  const { idNumber } = req.params;
+  const { department, bankAccount, names } = req.body;
+
+  try {
+    const workerRepository = AppDataSource.getRepository(Worker);
+    const workerNamesRepository = AppDataSource.getRepository(WorkerNames);
+
+    const worker = await workerRepository.findOne({ where: { idNumber } });
+    if (!worker) {
+      return res.status(404).json({ message: "Worker not found" });
+    }
+
     worker.department = department || worker.department;
     worker.bankAccount = bankAccount || worker.bankAccount;
 
-    const updatedWorker = await workerRepository.save(worker);
-    res.status(200).json(updatedWorker);
+    await workerRepository.save(worker);
+
+    if (names) {
+      await workerNamesRepository.delete({ worker });
+      const workerNames = names.map((name) =>
+        workerNamesRepository.create({ ...name, worker })
+      );
+      await workerNamesRepository.save(workerNames);
+    }
+
+    res.status(200).json({ message: "Worker updated successfully" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error updating worker", error });
   }
 };
 
-const deleteWorker = async (req, res, AppDataSource) => {
+export const deleteWorker = async (req, res) => {
   const { idNumber } = req.params;
 
   try {
     const workerRepository = AppDataSource.getRepository(Worker);
-    const worker = await workerRepository.findOne({ where: { idNumber } });
 
-    if (!worker) {
+    const result = await workerRepository.delete({ idNumber });
+    if (result.affected === 0) {
       return res.status(404).json({ message: "Worker not found" });
     }
 
-    await workerRepository.remove(worker);
     res.status(200).json({ message: "Worker deleted successfully" });
   } catch (error) {
     console.error(error);
@@ -140,45 +170,23 @@ const deleteWorker = async (req, res, AppDataSource) => {
   }
 };
 
-// Search Workers by partial or full name match
-const searchByName = async (req, res, AppDataSource) => {
-  const { name } = req.query; // get the name from the query parameter
-
-  if (!name) {
-    return res.status(400).json({ message: "Please provide a name to search" });
-  }
+export const searchByName = async (req, res) => {
+  const { name } = req.query;
 
   try {
-    const workerRepository = AppDataSource.getRepository(Worker);
-
-    // Search workers by partial match on first, middle, or last name
-    const workers = await workerRepository.find({
+    const workerNamesRepository = AppDataSource.getRepository(WorkerNames);
+    const workers = await workerNamesRepository.find({
       where: [
         { firstname: ILike(`%${name}%`) },
         { lastname: ILike(`%${name}%`) },
         { middlename: ILike(`%${name}%`) },
       ],
+      relations: ["worker"],
     });
-
-    if (workers.length === 0) {
-      return res
-        .status(404)
-        .json({ message: "No workers found with that name" });
-    }
 
     res.status(200).json(workers);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error searching workers by name", error });
   }
-};
-
-module.exports = {
-  createWorker,
-  getWorkers,
-  getWorkerByidNumber,
-  getWorkerWithPayrolls,
-  updateWorker,
-  deleteWorker,
-  searchByName,
 };

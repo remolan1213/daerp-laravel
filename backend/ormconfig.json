@@ -1,8 +1,8 @@
 {
   "type": "sqlite",
   "database": "data/db.sqlite",
-  "entities": ["src/entity/*.js"],
-  "migrations": ["src/migration/*.js"],
+  "entities": ["src/entities/*.js"],
+  "migrations": ["src/migrations/*.js"],
   "cli": {
     "migrationsDir": "src/migrations"
   },

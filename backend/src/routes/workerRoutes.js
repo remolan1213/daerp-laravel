@@ -1,40 +1,66 @@
-const express = require("express");
-const router = express.Router();
-const workerController = require("../controllers/WorkerController");
+import express from "express";
+import { 
+  createWorker, 
+  getWorkersWithPayroll, 
+  getWorkers, 
+  searchByName, 
+  getWorkerByidNumber, 
+  getWorkerWithPayrolls, 
+  updateWorker, 
+  deleteWorker 
+} from "../controllers/WorkerController.js";
+import { 
+  createWorkerName, 
+  getAllWorkerNames, 
+  getWorkerNameById, 
+  updateWorkerName, 
+  deleteWorkerName 
+} from "../controllers/WorkerNamesController.js";
 
-module.exports = function (AppDataSource) {
-  // Create worker
+const router = express.Router();
+
+export default function (AppDataSource) {
+  // Worker Routes
   router.post("/", (req, res) =>
-    workerController.createWorker(req, res, AppDataSource)
+    createWorker(req, res, AppDataSource)
   );
   router.get("/getworkerspayroll", (req, res) =>
-    workerController.getWorkersWithPayroll(req, res, AppDataSource)
+    getWorkersWithPayroll(req, res, AppDataSource)
   );
-  // Get all workers
   router.get("/", (req, res) =>
-    workerController.getWorkers(req, res, AppDataSource)
+    getWorkers(req, res, AppDataSource)
   );
-  // Search workers by name
   router.get("/search", (req, res) =>
-    workerController.searchByName(req, res, AppDataSource)
+    searchByName(req, res, AppDataSource)
   );
-
-  // Get worker by ID
   router.get("/:idNumber", (req, res) =>
-    workerController.getWorkerByidNumber(req, res, AppDataSource)
+    getWorkerByidNumber(req, res, AppDataSource)
   );
-  // Get worker and their payrolls
   router.get("/:idNumber/payrolls", (req, res) =>
-    workerController.getWorkerWithPayrolls(req, res, AppDataSource)
+    getWorkerWithPayrolls(req, res, AppDataSource)
   );
-  // Update worker
   router.put("/:idNumber", (req, res) =>
-    workerController.updateWorker(req, res, AppDataSource)
+    updateWorker(req, res, AppDataSource)
+  );
+  router.delete("/:idNumber", (req, res) =>
+    deleteWorker(req, res, AppDataSource)
   );
 
-  // Delete worker
-  router.delete("/:idNumber", (req, res) =>
-    workerController.deleteWorker(req, res, AppDataSource)
+  // Worker Names Routes
+  router.post("/names", (req, res) =>
+    createWorkerName(req, res, AppDataSource)
+  );
+  router.get("/names", (req, res) =>
+    getAllWorkerNames(req, res, AppDataSource)
+  );
+  router.get("/names/:id", (req, res) =>
+    getWorkerNameById(req, res, AppDataSource)
+  );
+  router.put("/names/:id", (req, res) =>
+    updateWorkerName(req, res, AppDataSource)
+  );
+  router.delete("/names/:id", (req, res) =>
+    deleteWorkerName(req, res, AppDataSource)
   );
 
   return router;

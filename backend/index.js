@@ -1,5 +1,7 @@
-const { app, initializeDataSource } = require("./da-app"); // Import the existing Express app
-require("dotenv").config(); // For loading environment variables
+import { app, initializeDataSource } from "./da-app.js"; // Import the existing Express app
+import dotenv from "dotenv"; // For loading environment variables
+
+dotenv.config();
 
 const port = process.env.DA_PORT || 4000; // Set your preferred backend port
 
