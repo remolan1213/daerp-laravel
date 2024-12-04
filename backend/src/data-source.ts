@@ -1,4 +1,4 @@
-// src/data-source.js
+// src/data-source.ts
 import { DataSource } from "typeorm";
 import Worker from "./entities/Worker.js";
 import Payroll from "./entities/Payroll.js";
@@ -9,7 +9,7 @@ import WorkerNames from "./entities/WorkerNames.js";
 
 const AppDataSource = new DataSource({
   type: "sqlite",
-  database: "data/db.sqlite",
+  database: "../data/db.sqlite",
   synchronize: true, // Set to `false` in production; use migrations instead.
   logging: false,
   entities: [
@@ -20,7 +20,7 @@ const AppDataSource = new DataSource({
     PayrollData,
     WorkerNames,
   ],
-  migrations: ["src/migrations/*.js"],
+  migrations: ["./migrations/*.js"]
 });
 
 export default AppDataSource;

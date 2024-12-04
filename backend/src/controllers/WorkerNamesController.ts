@@ -1,7 +1,8 @@
 import AppDataSource from "../data-source.js";
 import WorkerNames from "../entities/WorkerNames.js";
+import { Request, Response } from "express";
 
-const getAllWorkerNames = async (req, res) => {
+const getAllWorkerNames = async (req: Request, res: Response) => {
   try {
     const workerNames = await AppDataSource.getRepository(WorkerNames).find();
     res.json(workerNames);
@@ -10,7 +11,7 @@ const getAllWorkerNames = async (req, res) => {
   }
 };
 
-const createWorkerName = async (req, res) => {
+const createWorkerName = async (req: Request, res: Response) => {
   try {
     const workerName = await AppDataSource.getRepository(WorkerNames).save(
       req.body
@@ -21,10 +22,14 @@ const createWorkerName = async (req, res) => {
   }
 };
 
-const getWorkerNameById = async (req, res) => {
+const getWorkerNameById = async (req: Request, res: Response) => {
   try {
     const workerName = await AppDataSource.getRepository(WorkerNames).findOne(
-      req.params.id
+      {
+        where: {
+          id: Number(req.params.id),
+        },
+      }
     );
     if (!workerName) {
       return res.status(404).json({ error: "Worker Name not found" });
@@ -35,7 +40,7 @@ const getWorkerNameById = async (req, res) => {
   }
 };
 
-const updateWorkerName = async (req, res) => {
+const updateWorkerName = async (req: Request, res: Response) => {
   try {
     const result = await AppDataSource.getRepository(WorkerNames).update(
       req.params.id,
@@ -50,7 +55,7 @@ const updateWorkerName = async (req, res) => {
   }
 };
 
-const deleteWorkerName = async (req, res) => {
+const deleteWorkerName = async (req: Request, res: Response) => {
   try {
     const result = await AppDataSource.getRepository(WorkerNames).delete(
       req.params.id

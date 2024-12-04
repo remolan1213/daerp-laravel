@@ -1,9 +1,11 @@
-import AppDataSource from '../data-source.js';
-import Payroll from '../entities/Payroll.js';
-import Worker from '../entities/Worker.js';
+import { Request, Response } from 'express';
+import AppDataSource from '../data-source';
+import Payroll from '../entities/Payroll';
+import Worker from '../entities/Worker';
 
-const createPayroll = async (req, res) => {
-  const { payrollPeriod, payrollDate, workerId } = req.body;
+// **FUNCTION: CREATE PAYROLL**
+export const createPayroll = async (req: Request, res: Response) => {
+  const { payrollPeriod, payrollDate, workerId }: { payrollPeriod: string; payrollDate: Date; workerId: number } = req.body;
 
   try {
     const payrollRepository = AppDataSource.getRepository(Payroll);
@@ -14,11 +16,9 @@ const createPayroll = async (req, res) => {
       return res.status(404).json({ message: 'Worker not found' });
     }
 
-    const payroll = payrollRepository.create({
-      payrollPeriod,
-      payrollDate,
-      worker,
-    });
+    const payroll = new Payroll();
+    payroll.payrollPeriod = payrollPeriod;
+    payroll.payrollDate = payrollDate;
 
     const newPayroll = await payrollRepository.save(payroll);
     res.status(201).json(newPayroll);
@@ -28,7 +28,8 @@ const createPayroll = async (req, res) => {
   }
 };
 
-const getPayrolls = async (req, res) => {
+// **FUNCTION: GET PAYROLLS**
+export const getPayrolls = async (req: Request, res: Response) => {
   try {
     const payrollRepository = AppDataSource.getRepository(Payroll);
     const payrolls = await payrollRepository.find({ relations: ['worker'] });
@@ -39,17 +40,15 @@ const getPayrolls = async (req, res) => {
   }
 };
 
-const getPayrollById = async (req, res) => {
+// **FUNCTION: GET PAYROLL BY ID**
+export const getPayrollById = async (req: Request, res: Response) => {
   const { id } = req.params;
-
   try {
     const payrollRepository = AppDataSource.getRepository(Payroll);
-    const payroll = await payrollRepository.findOne({ where: { id }, relations: ['worker'] });
-
+    const payroll = await payrollRepository.findOne({ where: { id: Number(id) }, relations: ['worker'] });
     if (!payroll) {
       return res.status(404).json({ message: 'Payroll not found' });
     }
-
     res.status(200).json(payroll);
   } catch (error) {
     console.error(error);
@@ -57,51 +56,43 @@ const getPayrollById = async (req, res) => {
   }
 };
 
-const updatePayroll = async (req, res) => {
+// **FUNCTION: UPDATE PAYROLL**
+export const updatePayroll = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const { payrollPeriod, payrollDate } = req.body;
+  const { payrollPeriod, payrollDate }: { payrollPeriod: string; payrollDate: Date } = req.body;
 
   try {
     const payrollRepository = AppDataSource.getRepository(Payroll);
-
-    const payroll = await payrollRepository.findOne({ where: { id } });
+    const payroll = await payrollRepository.findOne({ where: { id: Number(id) } });
     if (!payroll) {
       return res.status(404).json({ message: 'Payroll not found' });
     }
 
-    payroll.payrollPeriod = payrollPeriod || payroll.payrollPeriod;
-    payroll.payrollDate = payrollDate || payroll.payrollDate;
+    payroll.payrollPeriod = payrollPeriod;
+    payroll.payrollDate = payrollDate;
 
-    await payrollRepository.save(payroll);
-    res.status(200).json({ message: 'Payroll updated successfully' });
+    const updatedPayroll = await payrollRepository.save(payroll);
+    res.status(200).json(updatedPayroll);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error updating payroll', error });
   }
 };
 
-const deletePayroll = async (req, res) => {
+// **FUNCTION: DELETE PAYROLL**
+export const deletePayroll = async (req: Request, res: Response) => {
   const { id } = req.params;
-
   try {
     const payrollRepository = AppDataSource.getRepository(Payroll);
-
-    const result = await payrollRepository.delete({ id });
-    if (result.affected === 0) {
+    const payroll = await payrollRepository.findOne({ where: { id: Number(id) } });
+    if (!payroll) {
       return res.status(404).json({ message: 'Payroll not found' });
     }
 
+    await payrollRepository.remove(payroll);
     res.status(200).json({ message: 'Payroll deleted successfully' });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error deleting payroll', error });
   }
-};
-
-export default {
-  createPayroll,
-  getPayrolls,
-  getPayrollById,
-  updatePayroll,
-  deletePayroll,
 };

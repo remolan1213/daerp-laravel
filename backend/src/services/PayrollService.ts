@@ -1,9 +1,10 @@
-// PayrollService.js
-const Payroll = require('../entity/Payroll');
-const PayrollData = require('../entity/PayrollData');
-const Worker = require('../entity/Worker');
+// PayrollService.ts
+import {entitiesRepository, Repository } from 'typeorm';
+import  Payroll from '../entities/Payroll';
+import PayrollData  from '../entities/PayrollData';
+import  Worker  from '../entities/Worker';
 
-const createPayroll = async (payrollData, AppDataSource) => {
+const createPayroll = async (payrollData: any, AppDataSource: any) => {
   const {
     payrollPeriod, payrollDate, grossAmount, netAmount,
     deductions, deductionAmount, totalAmount, workerId, payrollDetails
@@ -33,17 +34,17 @@ const createPayroll = async (payrollData, AppDataSource) => {
   return savedPayroll;
 };
 
-const getAllPayrolls = async (AppDataSource) => {
+const getAllPayrolls = async (AppDataSource: any) => {
   const payrollRepository = AppDataSource.getRepository(Payroll);
   return payrollRepository.find({ relations: ["worker", "payrollData"] });
 };
 
-const getPayrollById = async (id, AppDataSource) => {
+const getPayrollById = async (id: number, AppDataSource: any) => {
   const payrollRepository = AppDataSource.getRepository(Payroll);
   return payrollRepository.findOne({ where: { id }, relations: ["worker", "payrollData"] });
 };
 
-const updatePayroll = async (id, payrollData, AppDataSource) => {
+const updatePayroll = async (id: number, payrollData: any, AppDataSource: any) => {
   const { payrollPeriod, payrollDate, grossAmount, netAmount, deductions, deductionAmount, totalAmount, workerId } = payrollData;
   const payrollRepository = AppDataSource.getRepository(Payroll);
   const workerRepository = AppDataSource.getRepository(Worker);
@@ -70,7 +71,7 @@ const updatePayroll = async (id, payrollData, AppDataSource) => {
   return payrollRepository.save(payroll);
 };
 
-const deletePayroll = async (id, AppDataSource) => {
+const deletePayroll = async (id: number, AppDataSource: any) => {
   const payrollRepository = AppDataSource.getRepository(Payroll);
   const payroll = await payrollRepository.findOne({ where: { id } });
   if (!payroll) return null;
@@ -78,7 +79,7 @@ const deletePayroll = async (id, AppDataSource) => {
   return payroll;
 };
 
-module.exports = {
+export {
   createPayroll,
   getAllPayrolls,
   getPayrollById,
