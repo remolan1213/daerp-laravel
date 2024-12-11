@@ -8,9 +8,9 @@ import PayrollData from "./entities/PayrollData.js";
 import WorkerNames from "./entities/WorkerNames.js";
 const AppDataSource = new DataSource({
     type: "sqlite",
-    database: "../../data/db.sqlite",
+    database: "../data/db.sqlite",
     synchronize: true, // Set to `false` in production; use migrations instead.
-    logging: true,
+    logging: false,
     entities: [
         Worker,
         Payroll,

@@ -1,4 +1,4 @@
-import express,{ Request, Response } from "express";
+import express,{ Request, RequestHandler, Response} from "express";
 import AppDataSource from "../data-source";
 import Worker from "../entities/Worker";
 import WorkerNames from "../entities/WorkerNames";
@@ -56,6 +56,8 @@ export const getWorkers = async (req: Request, res: Response) => {
 };
 
 // **FUNCTION: GET WORKER BY ID NUMBER**
+
+
 export const getWorkerByidNumber = async (req: Request, res: Response) => {
   const idNumber:string = req.params.idNumber as string; // Ensure idNumber is a string
 
