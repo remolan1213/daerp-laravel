@@ -1,5 +1,5 @@
-import AppDataSource from "../data-source.js";
-import WorkerNames from "../entities/WorkerNames.js";
+import AppDataSource from "../data-source";
+import WorkerNames from "../entities/WorkerNames";
 import { Request, Response } from "express";
 
 const getAllWorkerNames = async (req: Request, res: Response) => {

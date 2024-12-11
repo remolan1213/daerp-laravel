@@ -2,7 +2,7 @@
 node_modules/
 
 # Build output
-dist/
+# dist/
 
 # Environment variable files
 .env
@@ -17,9 +17,9 @@ logs/
 *.swp
 
 # TypeORM migration files
-backend/src/migration/*
+# backend/src/migration/*
 
 # SQLite database files
-data/db.sqlite
+# data/db.sqlite
 
 

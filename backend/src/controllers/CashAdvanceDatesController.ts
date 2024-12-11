@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import AppDataSource from '../data-source.js';
-import CashAdvanceDates from '../entities/CashAdvanceDates.js';
+import AppDataSource from '../data-source';
+import CashAdvanceDates from '../entities/CashAdvanceDates';
 
 // **FUNCTION: GET ALL CASH ADVANCE DATES**
 export const getAllCashAdvanceDates = async (req: Request, res: Response) => {

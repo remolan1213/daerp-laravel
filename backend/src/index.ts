@@ -1,5 +1,5 @@
 import { app, initializeDataSource } from "./da-app"; // Import the existing Express app
-import dotenv from "dotenv"; // For loading environment variables
+import * as dotenv from "dotenv"; // For loading environment variables
 
 dotenv.config();
 

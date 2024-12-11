@@ -5,16 +5,10 @@ import Worker from '../entities/Worker';
 
 // **FUNCTION: CREATE PAYROLL**
 export const createPayroll = async (req: Request, res: Response) => {
-  const { payrollPeriod, payrollDate, workerId }: { payrollPeriod: string; payrollDate: Date; workerId: number } = req.body;
+  const { payrollPeriod, payrollDate }: { payrollPeriod: string; payrollDate: Date } = req.body;
 
   try {
     const payrollRepository = AppDataSource.getRepository(Payroll);
-    const workerRepository = AppDataSource.getRepository(Worker);
-
-    const worker = await workerRepository.findOne({ where: { id: workerId } });
-    if (!worker) {
-      return res.status(404).json({ message: 'Worker not found' });
-    }
 
     const payroll = new Payroll();
     payroll.payrollPeriod = payrollPeriod;

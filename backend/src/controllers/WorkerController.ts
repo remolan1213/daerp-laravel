@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import express,{ Request, Response } from "express";
 import AppDataSource from "../data-source";
 import Worker from "../entities/Worker";
 import WorkerNames from "../entities/WorkerNames";
@@ -26,43 +26,20 @@ interface UpdateWorkerRequestBody {
 }
 
 // **FUNCTION: CREATE WORKER**
-export const createWorker = async (
-  req: Request<{}, {}, WorkerRequestBody>,
-  res: Response
-) => {
-  const { idNumber, department, bankAccount, names } = req.body;
-
-  if (!idNumber || !department || !bankAccount || !names) {
-    return res.status(400).json({ message: "Missing required fields" });
-  }
+export const createWorker = async (req: Request, res: Response) => {
+  const workerRepository: Repository<Worker> = AppDataSource.getRepository(Worker);
 
   try {
-    const workerRepository = AppDataSource.getRepository(Worker);
-    const workerNamesRepository = AppDataSource.getRepository(WorkerNames);
+    const worker = workerRepository.create(req.body as WorkerRequestBody);
+    await workerRepository.save(worker);
 
-    const existingWorker = await workerRepository.findOne({
-      where: { idNumber },
-    });
-    if (existingWorker) {
-      return res
-        .status(400)
-        .json({ message: "Worker with this ID number already exists" });
-    }
-
-    const newWorker = workerRepository.create({
-      idNumber,
-      department,
-      bankAccount,
-      names: names.map((name) => workerNamesRepository.create(name)),
-    });
-    await workerRepository.save(newWorker);
-
-    res.status(201).json(newWorker);
+    res.status(201).json(worker);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error creating worker", error });
   }
 };
+
 
 // **FUNCTION: GET WORKERS**
 export const getWorkers = async (req: Request, res: Response) => {
@@ -80,25 +57,23 @@ export const getWorkers = async (req: Request, res: Response) => {
 
 // **FUNCTION: GET WORKER BY ID NUMBER**
 export const getWorkerByidNumber = async (req: Request, res: Response) => {
-  const { idNumber } = req.params;
+  const idNumber:string = req.params.idNumber as string; // Ensure idNumber is a string
 
   try {
     const workerRepository = AppDataSource.getRepository(Worker);
     const worker = await workerRepository.findOne({
       where: { idNumber },
-      relations: ["names", "payrolls", "cashAdvances"],
     });
-
     if (!worker) {
       return res.status(404).json({ message: "Worker not found" });
     }
-
     res.json(worker);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error retrieving worker", error });
   }
 };
+
 
 // **FUNCTION: GET WORKER WITH PAYROLLS**
 export const getWorkerWithPayrolls = async (req: Request, res: Response) => {

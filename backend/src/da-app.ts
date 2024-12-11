@@ -1,9 +1,9 @@
 import cors from "cors";
-import express, { Request, Response, NextFunction } from "express";
-import AppDataSource from "./src/data-source";
-import workerRoutes from "./src/routes/workerRoutes";
-import payrollRoutes from "./src/routes/payrollRoutes";
-import cashAdvanceRoutes from "./src/routes/cashAdvanceRoutes";
+import express from "express";
+import AppDataSource from "./data-source";
+import workerRoutes from "./routes/workerRoutes";
+import payrollRoutes from "./routes/payrollRoutes";
+import cashAdvanceRoutes from "./routes/cashAdvanceRoutes";
 
 const app = express();
 

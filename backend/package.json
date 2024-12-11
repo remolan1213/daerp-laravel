@@ -5,8 +5,10 @@
   "description": "backend",
   "main": "index.js",
   "scripts": {
+    "type-check": "tsc --noEmit",
     "build": "tsc",
-    "start": "node dist/index.js"
+    "postbuild": "node add-js-extension.js",
+    "start": "node dist/src/index.js"
   },
   "keywords": [],
   "author": "Rolando L. Lanugon",

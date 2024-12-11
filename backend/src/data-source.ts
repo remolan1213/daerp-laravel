@@ -1,11 +1,11 @@
 // src/data-source.ts
 import { DataSource } from "typeorm";
-import Worker from "./entities/Worker.js";
-import Payroll from "./entities/Payroll.js";
-import CashAdvance from "./entities/CashAdvance.js";
-import CashAdvanceDates from "./entities/CashAdvanceDates.js";
-import PayrollData from "./entities/PayrollData.js";
-import WorkerNames from "./entities/WorkerNames.js";
+import Worker from "./entities/Worker";
+import Payroll from "./entities/Payroll";
+import CashAdvance from "./entities/CashAdvance";
+import CashAdvanceDates from "./entities/CashAdvanceDates";
+import PayrollData from "./entities/PayrollData";
+import WorkerNames from "./entities/WorkerNames";
 
 const AppDataSource = new DataSource({
   type: "sqlite",
@@ -20,7 +20,7 @@ const AppDataSource = new DataSource({
     PayrollData,
     WorkerNames,
   ],
-  migrations: ["./migrations/*.js"]
+  migrations: ["./migrations/*.ts"],
 });
 
 export default AppDataSource;

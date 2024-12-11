@@ -1,18 +1,18 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import Worker from './Worker.js';
+import Worker from './Worker';
 
-@Entity('cash_advance')
+@Entity()
 class CashAdvance {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column('decimal')
+  @Column()
   amount!: number;
 
-  @Column('decimal')
+  @Column()
   remainAmount!: number;
 
-  @Column({ type: 'varchar', default: 'pending' })
+  @Column()
   status!: string;
 
   @ManyToOne(() => Worker, worker => worker.cashAdvances, { onDelete: 'CASCADE' })

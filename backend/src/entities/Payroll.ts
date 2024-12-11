@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import Worker from './Worker.js';
+import Worker from './Worker';
 
-@Entity('payroll')
+@Entity()
 class Payroll {
   @PrimaryGeneratedColumn()
   id!: number;

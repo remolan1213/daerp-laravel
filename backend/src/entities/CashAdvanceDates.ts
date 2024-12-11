@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import CashAdvance from './CashAdvance.js';
+import CashAdvance from './CashAdvance';
 
-@Entity('cash_advance_dates')
+@Entity()
 class CashAdvanceDates {
   @PrimaryGeneratedColumn()
   id!: number;

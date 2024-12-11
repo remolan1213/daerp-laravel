@@ -1,5 +1,4 @@
 // PayrollService.ts
-import {entitiesRepository, Repository } from 'typeorm';
 import  Payroll from '../entities/Payroll';
 import PayrollData  from '../entities/PayrollData';
 import  Worker  from '../entities/Worker';
