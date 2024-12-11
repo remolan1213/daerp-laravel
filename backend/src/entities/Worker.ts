@@ -1,32 +1,35 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import CashAdvance from './CashAdvance';
-import Payroll from './Payroll';
-import WorkerNames from './WorkerNames';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import CashAdvance from "./CashAdvance";
+import Payroll from "./Payroll";
 
 @Entity()
 class Worker {
   @PrimaryGeneratedColumn()
-  id!:number;
+  id!: number;
 
   @Column()
-  idNumber!:string;
+  idNumber!: string;
 
   @Column()
-  bankAccount!:string;
+  bankAccount!: string;
 
   @Column()
-  department!:string;
+  firstName!: string;
 
-  @OneToMany(() => CashAdvance, cashAdvance => cashAdvance.worker)
-  cashAdvances!:CashAdvance[];
+  @Column()
+  lastName!: string;
 
-  @OneToMany(() => Payroll, payroll => payroll.worker)
-  payrolls!:Payroll[]; 
+  @Column()
+  middleName!: string;
 
-  @OneToMany(() => WorkerNames, workerName => workerName.worker)
-  names!:WorkerNames[];
+  @Column()
+  department!: string;
+
+  @OneToMany(() => CashAdvance, (cashAdvance) => cashAdvance.worker)
+  cashAdvances!: CashAdvance[];
+
+  @OneToMany(() => Payroll, (payroll) => payroll.worker)
+  payrolls!: Payroll[];
 }
 
-export default Worker
-
-
+export default Worker;

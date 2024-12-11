@@ -1,6 +1,5 @@
 import AppDataSource from "../data-source.js";
 import Worker from "../entities/Worker.js";
-import WorkerNames from "../entities/WorkerNames.js";
 import { ILike } from "typeorm";
 // **FUNCTION: CREATE WORKER**
 export const createWorker = async (req, res) => {
@@ -19,9 +18,7 @@ export const createWorker = async (req, res) => {
 export const getWorkers = async (req, res) => {
     try {
         const workerRepository = AppDataSource.getRepository(Worker);
-        const workers = await workerRepository.find({
-            relations: ["names", "payrolls", "cashAdvances"],
-        });
+        const workers = await workerRepository.find();
         res.json(workers);
     }
     catch (error) {
@@ -81,20 +78,23 @@ export const getWorkersWithPayroll = async (req, res) => {
 // **FUNCTION: UPDATE WORKER**
 export const updateWorker = async (req, res) => {
     const { idNumber } = req.params;
-    const { department, bankAccount, names } = req.body;
+    const { newIdNumber, department, bankAccount, firstName, lastName, middleName } = req.body;
     try {
         const workerRepository = AppDataSource.getRepository(Worker);
-        const workerNamesRepository = AppDataSource.getRepository(WorkerNames);
         const worker = await workerRepository.findOne({
             where: { idNumber },
-            relations: ["names"],
         });
         if (!worker) {
             return res.status(404).json({ message: "Worker not found" });
         }
+        if (newIdNumber) {
+            worker.idNumber = newIdNumber;
+        }
         worker.department = department;
         worker.bankAccount = bankAccount;
-        worker.names = names.map((name) => workerNamesRepository.create(name));
+        worker.firstName = firstName;
+        worker.lastName = lastName;
+        worker.middleName = middleName;
         await workerRepository.save(worker);
         res.json(worker);
     }
@@ -126,12 +126,11 @@ export const searchByName = async (req, res) => {
     try {
         const workerRepository = AppDataSource.getRepository(Worker);
         const workers = await workerRepository.find({
-            where: {
-                names: {
-                    firstname: ILike(`%${name}%`),
-                },
-            },
-            relations: ["names"],
+            where: [
+                { firstName: ILike(`%${name}%`) },
+                { lastName: ILike(`%${name}%`) },
+                { middleName: ILike(`%${name}%`) },
+            ],
         });
         res.json(workers);
     }

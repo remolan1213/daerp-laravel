@@ -5,10 +5,9 @@ import Payroll from "./entities/Payroll.js";
 import CashAdvance from "./entities/CashAdvance.js";
 import CashAdvanceDates from "./entities/CashAdvanceDates.js";
 import PayrollData from "./entities/PayrollData.js";
-import WorkerNames from "./entities/WorkerNames.js";
 const AppDataSource = new DataSource({
     type: "sqlite",
-    database: "../data/db.sqlite",
+    database: "./data/db.sqlite",
     synchronize: true, // Set to `false` in production; use migrations instead.
     logging: false,
     entities: [
@@ -17,7 +16,6 @@ const AppDataSource = new DataSource({
         CashAdvance,
         CashAdvanceDates,
         PayrollData,
-        WorkerNames,
     ],
     migrations: ["./migrations/*.ts"],
 });

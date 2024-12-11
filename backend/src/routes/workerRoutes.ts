@@ -9,13 +9,6 @@ import {
   updateWorker,
   deleteWorker,
 } from "../controllers/WorkerController";
-import {
-  createWorkerName,
-  getAllWorkerNames,
-  getWorkerNameById,
-  updateWorkerName,
-  deleteWorkerName,
-} from "../controllers/WorkerNamesController";
 
 const router:Router = express.Router();
 
@@ -28,12 +21,5 @@ router.get("/:idNumber", getWorkerByidNumber); // getWorkerByidNumber
 router.get("/:idNumber/payrolls", getWorkerWithPayrolls); // getWorkerWithPayrolls
 router.put("/:idNumber", updateWorker); // updateWorker
 router.delete("/:idNumber", deleteWorker); // deleteWorker
-
-// Worker Names Routes
-router.post("/names", createWorkerName); // createWorkerName
-router.get("/names", getAllWorkerNames); // getAllWorkerNames
-router.get("/names/:id", getWorkerNameById); // getWorkerNameById
-router.put("/names/:id", updateWorkerName); // updateWorkerName
-router.delete("/names/:id", deleteWorkerName); // deleteWorkerName
 
 export default router;

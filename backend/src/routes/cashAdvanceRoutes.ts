@@ -19,15 +19,15 @@ const router = Router();
 // Cash Advance Routes
 router.post('/', createCashAdvance);
 router.get('/', getAllCashAdvances);
-// router.get('/:id', getCashAdvanceById);
-// router.put('/:id', updateCashAdvance);
-// router.delete('/:id', deleteCashAdvance);
+router.get('/:id', getCashAdvanceById);
+router.put('/:id', updateCashAdvance);
+router.delete('/:id', deleteCashAdvance);
 
 // Cash Advance Dates Routes
 router.post('/dates', createCashAdvanceDate);
 router.get('/dates', getAllCashAdvanceDates);
-// router.get('/dates/:id', getCashAdvanceDateById);
-// router.put('/dates/:id', updateCashAdvanceDate);
-// router.delete('/dates/:id', deleteCashAdvanceDate);
+router.get('/dates/:id', getCashAdvanceDateById);
+router.put('/dates/:id', updateCashAdvanceDate);
+router.delete('/dates/:id', deleteCashAdvanceDate);
 
 export default router;
