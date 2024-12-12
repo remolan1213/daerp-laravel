@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import CashAdvance from './CashAdvance';
 
 @Entity()
-class CashAdvanceDates {
+export default class CashAdvanceDates {
   @PrimaryGeneratedColumn()
   id!: number;
 
@@ -18,4 +18,4 @@ class CashAdvanceDates {
   cashAdvance!: CashAdvance;
 }
 
-export default CashAdvanceDates;
+

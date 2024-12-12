@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import Worker from './Worker';
 
 @Entity()
-class CashAdvance {
+export default class CashAdvance {
   @PrimaryGeneratedColumn()
   id!: number;
 
@@ -22,4 +22,4 @@ class CashAdvance {
   worker!: Worker[];
 }
 
-export default CashAdvance;
+

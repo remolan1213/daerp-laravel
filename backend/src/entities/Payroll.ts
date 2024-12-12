@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import Worker from './Worker';
 
 @Entity()
-class Payroll {
+export default class Payroll {
   @PrimaryGeneratedColumn()
   id!: number;
 
@@ -17,6 +17,4 @@ class Payroll {
     onUpdate: 'CASCADE',
   })
   worker!: Worker[];
-}
 
-export default Payroll;

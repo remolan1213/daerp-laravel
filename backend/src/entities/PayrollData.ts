@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import Payroll from './Payroll';
 
 @Entity()
-class PayrollData {
+export default class PayrollData {
   @PrimaryGeneratedColumn()
   id!: number;
 
@@ -25,4 +25,4 @@ class PayrollData {
   payroll!: Payroll;
 }
 
-export default PayrollData;
+
