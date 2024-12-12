@@ -91,7 +91,6 @@ export const updateWorker = async (req, res) => {
             worker.idNumber = newIdNumber;
         }
         worker.department = department;
-        worker.bankAccount = bankAccount;
         worker.firstName = firstName;
         worker.lastName = lastName;
         worker.middleName = middleName;

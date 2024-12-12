@@ -1,6 +1,7 @@
 // src/data-source.ts
 import { DataSource } from "typeorm";
 import Worker from "./entities/Worker";
+import BankAccount from "./entities/BankAccount";
 import Payroll from "./entities/Payroll";
 import CashAdvance from "./entities/CashAdvance";
 import CashAdvanceDates from "./entities/CashAdvanceDates";
@@ -13,6 +14,7 @@ const AppDataSource = new DataSource({
   logging: false,
   entities: [
     Worker,
+    BankAccount,
     Payroll,
     CashAdvance,
     CashAdvanceDates,

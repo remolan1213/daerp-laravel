@@ -7,17 +7,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
-import CashAdvance from "./CashAdvance.js";
-import Payroll from "./Payroll.js";
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import BankAccount from './BankAccount.js';
+import CashAdvance from './CashAdvance.js';
+import Payroll from './Payroll.js';
 let Worker = class Worker {
     id;
     idNumber;
-    bankAccount;
+    department;
     firstName;
     lastName;
     middleName;
-    department;
+    bankAccounts;
     cashAdvances;
     payrolls;
 };
@@ -32,7 +33,7 @@ __decorate([
 __decorate([
     Column(),
     __metadata("design:type", String)
-], Worker.prototype, "bankAccount", void 0);
+], Worker.prototype, "department", void 0);
 __decorate([
     Column(),
     __metadata("design:type", String)
@@ -46,9 +47,9 @@ __decorate([
     __metadata("design:type", String)
 ], Worker.prototype, "middleName", void 0);
 __decorate([
-    Column(),
-    __metadata("design:type", String)
-], Worker.prototype, "department", void 0);
+    OneToMany(() => BankAccount, (bankAccount) => bankAccount.worker),
+    __metadata("design:type", Array)
+], Worker.prototype, "bankAccounts", void 0);
 __decorate([
     OneToMany(() => CashAdvance, (cashAdvance) => cashAdvance.worker),
     __metadata("design:type", Array)

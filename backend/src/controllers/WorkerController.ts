@@ -129,7 +129,6 @@ export const updateWorker = async (
     }
 
     worker.department = department;
-    worker.bankAccount = bankAccount;
     worker.firstName = firstName;
     worker.lastName = lastName;
     worker.middleName = middleName;

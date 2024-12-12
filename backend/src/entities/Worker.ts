@@ -1,9 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
-import CashAdvance from "./CashAdvance";
-import Payroll from "./Payroll";
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import BankAccount from './BankAccount';
+import CashAdvance from './CashAdvance';
+import Payroll from './Payroll';
 
 @Entity()
-class Worker {
+export default class Worker {
   @PrimaryGeneratedColumn()
   id!: number;
 
@@ -11,7 +12,7 @@ class Worker {
   idNumber!: string;
 
   @Column()
-  bankAccount!: string;
+  department!: string;
 
   @Column()
   firstName!: string;
@@ -22,8 +23,8 @@ class Worker {
   @Column()
   middleName!: string;
 
-  @Column()
-  department!: string;
+  @OneToMany(() => BankAccount, (bankAccount) => bankAccount.worker)
+  bankAccounts!: BankAccount[];
 
   @OneToMany(() => CashAdvance, (cashAdvance) => cashAdvance.worker)
   cashAdvances!: CashAdvance[];
@@ -31,5 +32,3 @@ class Worker {
   @OneToMany(() => Payroll, (payroll) => payroll.worker)
   payrolls!: Payroll[];
 }
-
-export default Worker;

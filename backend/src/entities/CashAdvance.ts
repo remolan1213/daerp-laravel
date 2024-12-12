@@ -10,7 +10,10 @@ class CashAdvance {
   amount!: number;
 
   @Column()
-  remainAmount!: number;
+  dateRequested!: Date;
+
+  @Column()
+  dateGiven!: Date;
 
   @Column()
   status!: string;

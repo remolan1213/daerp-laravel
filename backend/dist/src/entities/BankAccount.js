@@ -7,41 +7,36 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import Worker from './Worker.js';
-let CashAdvance = class CashAdvance {
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import Worker from "./Worker.js";
+let BankAccount = class BankAccount {
     id;
-    amount;
-    dateRequested;
-    dateGiven;
-    status;
+    accountNumber;
+    bankName;
+    accountStatus;
     worker;
 };
 __decorate([
     PrimaryGeneratedColumn(),
     __metadata("design:type", Number)
-], CashAdvance.prototype, "id", void 0);
-__decorate([
-    Column(),
-    __metadata("design:type", Number)
-], CashAdvance.prototype, "amount", void 0);
-__decorate([
-    Column(),
-    __metadata("design:type", Date)
-], CashAdvance.prototype, "dateRequested", void 0);
-__decorate([
-    Column(),
-    __metadata("design:type", Date)
-], CashAdvance.prototype, "dateGiven", void 0);
+], BankAccount.prototype, "id", void 0);
 __decorate([
     Column(),
     __metadata("design:type", String)
-], CashAdvance.prototype, "status", void 0);
+], BankAccount.prototype, "accountNumber", void 0);
 __decorate([
-    ManyToOne(() => Worker, worker => worker.cashAdvances, { onDelete: 'CASCADE' }),
+    Column(),
+    __metadata("design:type", String)
+], BankAccount.prototype, "bankName", void 0);
+__decorate([
+    Column(),
+    __metadata("design:type", String)
+], BankAccount.prototype, "accountStatus", void 0);
+__decorate([
+    ManyToOne(() => Worker, worker => worker, { onDelete: 'CASCADE' }),
     __metadata("design:type", Array)
-], CashAdvance.prototype, "worker", void 0);
-CashAdvance = __decorate([
+], BankAccount.prototype, "worker", void 0);
+BankAccount = __decorate([
     Entity()
-], CashAdvance);
-export default CashAdvance;
+], BankAccount);
+export default BankAccount;
