@@ -7,13 +7,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import Worker from './Worker.js';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import PayrollData from './PayrollData.js';
 let Payroll = class Payroll {
     id;
     payrollPeriod;
     payrollDate;
-    worker;
+    payrollData;
 };
 __decorate([
     PrimaryGeneratedColumn(),
@@ -24,16 +24,13 @@ __decorate([
     __metadata("design:type", String)
 ], Payroll.prototype, "payrollPeriod", void 0);
 __decorate([
-    Column(),
+    Column({ unique: true }),
     __metadata("design:type", Date)
 ], Payroll.prototype, "payrollDate", void 0);
 __decorate([
-    ManyToOne(() => Worker, worker => worker.payrolls, {
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE',
-    }),
+    OneToMany(() => PayrollData, payrollData => payrollData.payroll),
     __metadata("design:type", Array)
-], Payroll.prototype, "worker", void 0);
+], Payroll.prototype, "payrollData", void 0);
 Payroll = __decorate([
     Entity()
 ], Payroll);

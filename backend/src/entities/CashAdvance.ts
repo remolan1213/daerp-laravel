@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, Relation } from 'typeorm';
 import Worker from './Worker';
 
 @Entity()
@@ -18,8 +18,9 @@ export default class CashAdvance {
   @Column()
   status!: string;
 
-  @ManyToOne(() => Worker, worker => worker.cashAdvances, { onDelete: 'CASCADE' })
-  worker!: Worker[];
+  @ManyToOne(() => Worker, (worker) => worker.cashAdvances, {
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+  })
+  worker!: Relation<Worker>;
 }
-
-

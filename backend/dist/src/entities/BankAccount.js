@@ -7,8 +7,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
-import Worker from "./Worker.js";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, Unique, } from "typeorm";
+import Worker from "./Worker.js"; // Import Worker
 let BankAccount = class BankAccount {
     id;
     accountNumber;
@@ -33,10 +33,15 @@ __decorate([
     __metadata("design:type", String)
 ], BankAccount.prototype, "accountStatus", void 0);
 __decorate([
-    ManyToOne(() => Worker, worker => worker, { onDelete: 'CASCADE' }),
-    __metadata("design:type", Array)
+    ManyToOne(() => Worker, (worker) => worker.bankAccounts, {
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+        nullable: false,
+    }),
+    __metadata("design:type", Object)
 ], BankAccount.prototype, "worker", void 0);
 BankAccount = __decorate([
-    Entity()
+    Entity(),
+    Unique("unique_account_number", ["accountNumber"])
 ], BankAccount);
 export default BankAccount;

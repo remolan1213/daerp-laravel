@@ -4,7 +4,6 @@ import Worker from "./entities/Worker";
 import BankAccount from "./entities/BankAccount";
 import Payroll from "./entities/Payroll";
 import CashAdvance from "./entities/CashAdvance";
-import CashAdvanceDates from "./entities/CashAdvanceDates";
 import PayrollData from "./entities/PayrollData";
 
 const AppDataSource = new DataSource({
@@ -17,7 +16,6 @@ const AppDataSource = new DataSource({
     BankAccount,
     Payroll,
     CashAdvance,
-    CashAdvanceDates,
     PayrollData,
   ],
   migrations: ["./migrations/*.ts"],

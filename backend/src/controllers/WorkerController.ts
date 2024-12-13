@@ -187,3 +187,32 @@ export const searchByName = async (req: Request, res: Response) => {
   }
 };
 
+/*
+1. createWorker - POST /workers
+   - Creates a new worker
+   - Parameters: WorkerRequestBody (firstName, lastName, middleName, department, bankAccount)
+
+2. getWorkers - GET /workers
+   - Retrieves all workers
+   - Parameters: None
+
+3. getWorkerByidNumber - GET /workers/:idNumber
+   - Retrieves a worker by idNumber
+   - Parameters: idNumber (string)
+
+4. getWorkerWithPayrolls - GET /workers/:idNumber/payrolls
+   - Retrieves a worker with associated payrolls
+   - Parameters: idNumber (string)
+
+5. updateWorker - PUT /workers/:idNumber
+   - Updates a worker
+   - Parameters: idNumber (string), UpdateWorkerRequestBody (newIdNumber, department, bankAccount, firstName, lastName, middleName)
+
+6. deleteWorker - DELETE /workers/:idNumber
+   - Deletes a worker
+   - Parameters: idNumber (string)
+
+7. searchByName - GET /workers?name=:name
+   - Searches for workers by name
+   - Parameters: name (string)
+*/

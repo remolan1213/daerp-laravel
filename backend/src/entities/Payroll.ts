@@ -1,5 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import Worker from './Worker';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import PayrollData from './PayrollData';
 
 @Entity()
 export default class Payroll {
@@ -9,12 +9,9 @@ export default class Payroll {
   @Column()
   payrollPeriod!: string;
 
-  @Column()
+  @Column({ unique: true })
   payrollDate!: Date;  
 
-  @ManyToOne(() => Worker, worker => worker.payrolls, {
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
-  })
-  worker!: Worker[];
-
+  @OneToMany(() => PayrollData, payrollData => payrollData.payroll)
+  payrollData!: PayrollData[];
+}

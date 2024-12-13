@@ -7,10 +7,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import BankAccount from './BankAccount.js';
-import CashAdvance from './CashAdvance.js';
-import Payroll from './Payroll.js';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, Unique, } from "typeorm";
+import BankAccount from "./BankAccount.js";
+import CashAdvance from "./CashAdvance.js";
+import PayrollData from "./PayrollData.js";
 let Worker = class Worker {
     id;
     idNumber;
@@ -18,16 +18,16 @@ let Worker = class Worker {
     firstName;
     lastName;
     middleName;
-    bankAccounts;
     cashAdvances;
     payrolls;
+    bankAccounts;
 };
 __decorate([
     PrimaryGeneratedColumn(),
     __metadata("design:type", Number)
 ], Worker.prototype, "id", void 0);
 __decorate([
-    Column(),
+    Column({ length: 20 }),
     __metadata("design:type", String)
 ], Worker.prototype, "idNumber", void 0);
 __decorate([
@@ -35,30 +35,31 @@ __decorate([
     __metadata("design:type", String)
 ], Worker.prototype, "department", void 0);
 __decorate([
-    Column(),
+    Column({ length: 25 }),
     __metadata("design:type", String)
 ], Worker.prototype, "firstName", void 0);
 __decorate([
-    Column(),
+    Column({ length: 25 }),
     __metadata("design:type", String)
 ], Worker.prototype, "lastName", void 0);
 __decorate([
-    Column(),
+    Column({ length: 25 }),
     __metadata("design:type", String)
 ], Worker.prototype, "middleName", void 0);
-__decorate([
-    OneToMany(() => BankAccount, (bankAccount) => bankAccount.worker),
-    __metadata("design:type", Array)
-], Worker.prototype, "bankAccounts", void 0);
 __decorate([
     OneToMany(() => CashAdvance, (cashAdvance) => cashAdvance.worker),
     __metadata("design:type", Array)
 ], Worker.prototype, "cashAdvances", void 0);
 __decorate([
-    OneToMany(() => Payroll, (payroll) => payroll.worker),
+    OneToMany(() => PayrollData, (payrollData) => payrollData.worker),
     __metadata("design:type", Array)
 ], Worker.prototype, "payrolls", void 0);
+__decorate([
+    OneToMany(() => BankAccount, (bankAccount) => bankAccount.worker),
+    __metadata("design:type", Array)
+], Worker.prototype, "bankAccounts", void 0);
 Worker = __decorate([
-    Entity()
+    Entity(),
+    Unique("unique_id_number", ["idNumber"])
 ], Worker);
 export default Worker;

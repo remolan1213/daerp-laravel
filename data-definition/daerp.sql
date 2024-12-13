@@ -30,7 +30,6 @@ CREATE TABLE `payroll`  (
   `id` int NOT NULL AUTO_INCREMENT,
   `payrollPeriod` longtext NOT NULL,
   `payrollDate` longtext NOT NULL,
-  `workerId` int NULL,
   PRIMARY KEY (`id`),
   INDEX `idx_workerId_payroll`(`workerId` ASC)
 );
@@ -42,13 +41,9 @@ CREATE TABLE `payrolldata`  (
   `workerpercentage` double NOT NULL,
   `sharingpercentage` double NOT NULL,
   `idPayroll` int NOT NULL,
+  `workerId` int NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `idx_idPayroll_payrolldata`(`idPayroll` ASC)
-);
-
-CREATE TABLE `sqlite_sequence`  (
-  `name` longblob NULL,
-  `seq` longblob NULL
 );
 
 CREATE TABLE `worker`  (
@@ -63,7 +58,7 @@ CREATE TABLE `worker`  (
 
 ALTER TABLE `cash_advance` ADD FOREIGN KEY (`workerId`) REFERENCES `worker` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 ALTER TABLE `cash_advance_dates` ADD FOREIGN KEY (`cashAdvanceId`) REFERENCES `cash_advance` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
-ALTER TABLE `payroll` ADD CONSTRAINT `FK_bfd18d0d76a2bffa92b36449e1b` FOREIGN KEY (`workerId`) REFERENCES `worker` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE `payrolldata` ADD CONSTRAINT `FK_payroll` FOREIGN KEY (`idPayroll`) REFERENCES `payroll` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE `worker` ADD CONSTRAINT `fk_worker_bank_account_1` FOREIGN KEY (`id`) REFERENCES `bank_account` (`workerId`);
+ALTER TABLE `worker` ADD CONSTRAINT `fk_worker_payrolldata_1` FOREIGN KEY (`id`) REFERENCES `payrolldata` (`workerId`);
 

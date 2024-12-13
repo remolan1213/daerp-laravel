@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import Payroll from './Payroll';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, Relation } from "typeorm";
+import Payroll from "./Payroll";
+import Worker from "./Worker";
 
 @Entity()
 export default class PayrollData {
@@ -18,11 +19,18 @@ export default class PayrollData {
   @Column()
   sharingpercentage!: number;
 
-  @ManyToOne(() => Payroll, payroll => payroll.id, {
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
+  @Column()
+  payrollId!: number;
+
+  @ManyToOne(() => Payroll, (payroll) => payroll.payrollData, {
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
   })
-  payroll!: Payroll;
+  payroll!: Relation<Payroll>;
+
+  @ManyToOne(() => Worker, (worker) => worker.payrolls, {
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+  })
+  worker!: Relation<Worker>;
 }
-
-

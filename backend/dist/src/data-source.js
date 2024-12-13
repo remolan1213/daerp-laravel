@@ -4,7 +4,6 @@ import Worker from "./entities/Worker.js";
 import BankAccount from "./entities/BankAccount.js";
 import Payroll from "./entities/Payroll.js";
 import CashAdvance from "./entities/CashAdvance.js";
-import CashAdvanceDates from "./entities/CashAdvanceDates.js";
 import PayrollData from "./entities/PayrollData.js";
 const AppDataSource = new DataSource({
     type: "sqlite",
@@ -16,7 +15,6 @@ const AppDataSource = new DataSource({
         BankAccount,
         Payroll,
         CashAdvance,
-        CashAdvanceDates,
         PayrollData,
     ],
     migrations: ["./migrations/*.ts"],

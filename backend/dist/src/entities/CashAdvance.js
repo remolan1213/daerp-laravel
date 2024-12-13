@@ -38,8 +38,11 @@ __decorate([
     __metadata("design:type", String)
 ], CashAdvance.prototype, "status", void 0);
 __decorate([
-    ManyToOne(() => Worker, worker => worker.cashAdvances, { onDelete: 'CASCADE' }),
-    __metadata("design:type", Array)
+    ManyToOne(() => Worker, (worker) => worker.cashAdvances, {
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+    }),
+    __metadata("design:type", Object)
 ], CashAdvance.prototype, "worker", void 0);
 CashAdvance = __decorate([
     Entity()
