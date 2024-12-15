@@ -1,4 +1,5 @@
 // LabelValue.jsx
+import React from 'react';
 import '../LabelValue.css'; // Optional: add styles for the label-value pair
 
 const LabelValue = ({ label, value }) => {

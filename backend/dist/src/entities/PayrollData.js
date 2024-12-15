@@ -7,18 +7,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, } from "typeorm";
 import Payroll from "./Payroll.js";
-import Worker from "./Worker.js";
+import WorkerRate from "./WorkerRate.js";
 let PayrollData = class PayrollData {
     id;
     description;
-    grossmount;
-    workerpercentage;
-    sharingpercentage;
-    payrollId;
+    grossAmount;
+    sharingPercentage;
+    // @Column()
+    // payrollId!: number;
     payroll;
-    worker;
+    workerRate;
 };
 __decorate([
     PrimaryGeneratedColumn(),
@@ -31,19 +31,11 @@ __decorate([
 __decorate([
     Column(),
     __metadata("design:type", Number)
-], PayrollData.prototype, "grossmount", void 0);
+], PayrollData.prototype, "grossAmount", void 0);
 __decorate([
     Column(),
     __metadata("design:type", Number)
-], PayrollData.prototype, "workerpercentage", void 0);
-__decorate([
-    Column(),
-    __metadata("design:type", Number)
-], PayrollData.prototype, "sharingpercentage", void 0);
-__decorate([
-    Column(),
-    __metadata("design:type", Number)
-], PayrollData.prototype, "payrollId", void 0);
+], PayrollData.prototype, "sharingPercentage", void 0);
 __decorate([
     ManyToOne(() => Payroll, (payroll) => payroll.payrollData, {
         onDelete: "CASCADE",
@@ -52,12 +44,12 @@ __decorate([
     __metadata("design:type", Object)
 ], PayrollData.prototype, "payroll", void 0);
 __decorate([
-    ManyToOne(() => Worker, (worker) => worker.payrolls, {
+    ManyToOne(() => WorkerRate, (workerRate) => workerRate.payrollDatas, {
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
     }),
     __metadata("design:type", Object)
-], PayrollData.prototype, "worker", void 0);
+], PayrollData.prototype, "workerRate", void 0);
 PayrollData = __decorate([
     Entity()
 ], PayrollData);

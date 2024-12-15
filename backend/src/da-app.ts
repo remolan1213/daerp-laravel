@@ -4,6 +4,7 @@ import AppDataSource from "./data-source";
 import workerRoutes from "./routes/workerRoutes";
 import payrollRoutes from "./routes/payrollRoutes";
 import cashAdvanceRoutes from "./routes/cashAdvanceRoutes";
+import bankRoutes from "./routes/bankRoutes";
 
 const app = express();
 
@@ -23,5 +24,6 @@ const initializeDataSource = async () => {
 app.use("/api/workers", workerRoutes);
 app.use("/api/payrolls", payrollRoutes);
 app.use("/api/cash-advances", cashAdvanceRoutes);
+app.use("/api/bank-accounts", bankRoutes);
 
 export { app, initializeDataSource };

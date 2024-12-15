@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Form, Button, Alert } from "react-bootstrap";
 
 const PayrollForm = () => {
   // State for storing form inputs
@@ -41,135 +40,154 @@ const PayrollForm = () => {
 
       if (response.ok) {
         setMessage(
-          <Alert variant="success">Payroll added successfully!</Alert>
+          <div className="alert alert-success" role="alert">
+            Payroll added successfully!
+          </div>
         );
       } else {
         const errorText = await response.text();
         setMessage(
-          <Alert variant="danger">Failed to add payroll: {errorText}</Alert>
+          <div className="alert alert-danger" role="alert">
+            Failed to add payroll: {errorText}
+          </div>
         );
       }
     } catch (error) {
       setMessage(
-        <Alert variant="danger">
-          Error: Failed to connect to the server. ${error.message}
-        </Alert>
+        <div className="alert alert-danger" role="alert">
+          Error: Failed to connect to the server. {error.message}
+        </div>
       );
     }
   };
 
   return (
-    <Form
+    <form
       className="card"
       onSubmit={handleSubmit}
       noValidate={true}
       autoComplete="off"
     >
-      <Form.Group controlId="workerId">
-        <Form.Label className="mt-3 ms-2 mb-0">Worker ID</Form.Label>
-        <Form.Control
-          className="mt-0 ms-2 me-2 mb-1 w-auto"
+      <div className="form-group">
+        <label htmlFor="workerId" className="mt-3 ms-2 mb-0">
+          Worker ID
+        </label>
+        <input
           type="number"
           name="workerId"
+          className="form-control mt-0 ms-2 me-2 mb-1 w-auto"
           value={formData.workerId}
           onChange={handleChange}
           required
         />
-      </Form.Group>
-      <Form.Group controlId="payrollPeriod">
-        <Form.Label className="mt-3 ms-2 mb-0">Payroll Period</Form.Label>
-        <Form.Control
-          className="mt-0 ms-2 me-2 mb-1 w-auto"
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="payrollPeriod" className="mt-3 ms-2 mb-0">
+          Payroll Period
+        </label>
+        <input
           type="text"
           name="payrollPeriod"
+          className="form-control mt-0 ms-2 me-2 mb-1 w-auto"
           value={formData.payrollPeriod}
           onChange={handleChange}
           required
         />
-      </Form.Group>
+      </div>
 
-      <Form.Group controlId="payrollDate">
-        <Form.Label className="mt-3 ms-2 mb-0">Payroll Date</Form.Label>
-        <Form.Control
-          className="mt-0 ms-2 me-2 mb-1 w-auto"
+      <div className="form-group">
+        <label htmlFor="payrollDate" className="mt-3 ms-2 mb-0">
+          Payroll Date
+        </label>
+        <input
           type="text"
           name="payrollDate"
+          className="form-control mt-0 ms-2 me-2 mb-1 w-auto"
           value={formData.payrollDate}
           onChange={handleChange}
           required
         />
-      </Form.Group>
+      </div>
 
-      <Form.Group controlId="grossAmount">
-        <Form.Label className="mt-3 ms-2 mb-0">Gross Amount</Form.Label>
-        <Form.Control
-          className="mt-0 ms-2 me-2 mb-1 w-auto"
+      <div className="form-group">
+        <label htmlFor="grossAmount" className="mt-3 ms-2 mb-0">
+          Gross Amount
+        </label>
+        <input
           type="number"
           name="grossAmount"
+          className="form-control mt-0 ms-2 me-2 mb-1 w-auto"
           value={formData.grossAmount}
           onChange={handleChange}
           required
         />
-      </Form.Group>
+      </div>
 
-      <Form.Group controlId="netAmount">
-        <Form.Label className="mt-3 ms-2 mb-0">Net Amount</Form.Label>
-        <Form.Control
-          className="mt-0 ms-2 me-2 mb-1 w-auto"
+      <div className="form-group">
+        <label htmlFor="netAmount" className="mt-3 ms-2 mb-0">
+          Net Amount
+        </label>
+        <input
           type="number"
           name="netAmount"
+          className="form-control mt-0 ms-2 me-2 mb-1 w-auto"
           value={formData.netAmount}
           onChange={handleChange}
           required
         />
-      </Form.Group>
+      </div>
 
-      <Form.Group controlId="deductions">
-        <Form.Label className="mt-3 ms-2 mb-0">Deductions</Form.Label>
-        <Form.Control
-          className="mt-0 ms-2 me-2 mb-1 w-auto"
+      <div className="form-group">
+        <label htmlFor="deductions" className="mt-3 ms-2 mb-0">
+          Deductions
+        </label>
+        <input
           type="text"
           name="deductions"
+          className="form-control mt-0 ms-2 me-2 mb-1 w-auto"
           value={formData.deductions}
           onChange={handleChange}
         />
-      </Form.Group>
+      </div>
 
-      <Form.Group controlId="deductionAmount">
-        <Form.Label className="mt-3 ms-2 mb-0">Deduction Amount</Form.Label>
-        <Form.Control
-          className="mt-0 ms-2 me-2 mb-1 w-auto"
+      <div className="form-group">
+        <label htmlFor="deductionAmount" className="mt-3 ms-2 mb-0">
+          Deduction Amount
+        </label>
+        <input
           type="number"
           name="deductionAmount"
+          className="form-control mt-0 ms-2 me-2 mb-1 w-auto"
           value={formData.deductionAmount}
           onChange={handleChange}
           required
         />
-      </Form.Group>
+      </div>
 
-      <Form.Group controlId="totalAmount">
-        <Form.Label className="mt-3 ms-2 mb-0">Total Amount</Form.Label>
-        <Form.Control
-          className="mt-0 ms-2 me-2 mb-1 w-auto"
+      <div className="form-group">
+        <label htmlFor="totalAmount" className="mt-3 ms-2 mb-0">
+          Total Amount
+        </label>
+        <input
           type="number"
           name="totalAmount"
+          className="form-control mt-0 ms-2 me-2 mb-1 w-auto"
           value={formData.totalAmount}
           onChange={handleChange}
           required
         />
-      </Form.Group>
+      </div>
 
-      <Button
-        variant="primary"
-        size="sm"
+      <button
         type="submit"
-        className="w-25 mx-auto mt-2 mb-3"
+        className="btn btn-primary w-25 mx-auto mt-2 mb-3"
       >
         Submit
-      </Button>
+      </button>
 
-      {message && <Alert style={{ marginTop: "20px" }}>{message}</Alert>}
-    </Form>
+      {message && <div style={{ marginTop: "20px" }}>{message}</div>}
+    </form>
   );
 };
 

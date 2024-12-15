@@ -8,6 +8,7 @@ import {
 import  BankAccount  from "./BankAccount";
 import CashAdvance from "./CashAdvance";
 import PayrollData from "./PayrollData";
+import WorkerRate from "./WorkerRate";
 
 @Entity()
 @Unique("unique_id_number", ["idNumber"])
@@ -33,8 +34,8 @@ export default class Worker {
   @OneToMany(() => CashAdvance, (cashAdvance) => cashAdvance.worker)
   cashAdvances!: CashAdvance[];
 
-  @OneToMany(() => PayrollData, (payrollData) => payrollData.worker)
-  payrolls!: PayrollData[];
+  @OneToMany(() => WorkerRate, (workerRate) => workerRate.worker)
+  workerRates!: WorkerRate[];
 
   @OneToMany(() => BankAccount, (bankAccount) => bankAccount.worker)
   bankAccounts!: BankAccount[];

@@ -1,5 +1,5 @@
 // Card.jsx
-// import React from 'react';
+import React from 'react';
 import '../Card.css'; // Optional: add styles for your card
 
 const Card = ({ title, children }) => {

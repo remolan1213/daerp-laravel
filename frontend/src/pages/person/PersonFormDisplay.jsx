@@ -1,5 +1,4 @@
 import React from "react";
-import { Form, Button } from "react-bootstrap";
 
 const PersonFormDisplay = ({
   formData,
@@ -9,89 +8,108 @@ const PersonFormDisplay = ({
 }) => {
   return (
     <div>
-      <Form className="card" onSubmit={handleSubmit}>
-        <Form.Group controlId="firstname">
-          <Form.Label className="mt-3 ms-2 mb-0">First Name</Form.Label>
-          <Form.Control className="mt-0 ms-2 me-2 mb-1 w-auto"
-            type="text"
-            name="firstname"
-            value={formData.firstname}
-            onChange={handleChange}
-            required
-          />
-        </Form.Group>
+      <form onSubmit={handleSubmit} className="card">
+        <div className="card-body">
+          <div className="mb-3">
+            <label className="form-label" htmlFor="firstname">
+              First Name
+            </label>
+            <input
+              className="form-control"
+              type="text"
+              id="firstname"
+              name="firstname"
+              value={formData.firstname}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        <Form.Group controlId="middlename">
-          <Form.Label className="mt-3 ms-2 mb-0">Middle Name</Form.Label>
-          <Form.Control className="mt-0 ms-2 me-2 mb-1 w-auto"
-            type="text"
-            name="middlename"
-            value={formData.middlename}
-            onChange={handleChange}
-          />
-        </Form.Group>
+          <div className="mb-3">
+            <label className="form-label" htmlFor="middlename">
+              Middle Name
+            </label>
+            <input
+              className="form-control"
+              type="text"
+              id="middlename"
+              name="middlename"
+              value={formData.middlename}
+              onChange={handleChange}
+            />
+          </div>
 
-        <Form.Group controlId="lastname">
-          <Form.Label className="mt-3 ms-2 mb-0">Last Name</Form.Label>
-          <Form.Control className="mt-0 ms-2 me-2 mb-1 w-auto"
-            type="text"
-            name="lastname"
-            value={formData.lastname}
-            onChange={handleChange}
-            required
-          />
-        </Form.Group>
+          <div className="mb-3">
+            <label className="form-label" htmlFor="lastname">
+              Last Name
+            </label>
+            <input
+              className="form-control"
+              type="text"
+              id="lastname"
+              name="lastname"
+              value={formData.lastname}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        <Form.Group controlId="idNumber">
-          <Form.Label className="mt-3 ms-2 mb-0">ID Number</Form.Label>
-          <Form.Control className="mt-0 ms-2 me-2 mb-1 w-auto"
-            type="text"
-            name="idNumber"
-            value={formData.idNumber}
-            onChange={handleChange}
-            required
-          />
-        </Form.Group>
+          <div className="mb-3">
+            <label className="form-label" htmlFor="idNumber">
+              ID Number
+            </label>
+            <input
+              className="form-control"
+              type="text"
+              id="idNumber"
+              name="idNumber"
+              value={formData.idNumber}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        <Form.Group controlId="department">
-          <Form.Label className="mt-3 ms-2 mb-0">Department</Form.Label>
-          <Form.Control className="mt-0 ms-2 me-2 mb-1 w-auto"
-            type="text"
-            name="department"
-            value={formData.department}
-            onChange={handleChange}
-            required
-          />
-        </Form.Group>
+          <div className="mb-3">
+            <label className="form-label" htmlFor="department">
+              Department
+            </label>
+            <input
+              className="form-control"
+              type="text"
+              id="department"
+              name="department"
+              value={formData.department}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        <Form.Group controlId="bankAccount">
-          <Form.Label className="mt-3 ms-2 mb-0">Bank Account</Form.Label>
-          <Form.Control className="mt-0 ms-2 me-2 mb-1 w-auto"
-            type="text"
-            name="bankAccount"
-            value={formData.bankAccount}
-            onChange={handleChange}
-            required
-          />
-        </Form.Group>
+          <div className="mb-3">
+            <label className="form-label" htmlFor="bankAccount">
+              Bank Account
+            </label>
+            <input
+              className="form-control"
+              type="text"
+              id="bankAccount"
+              name="bankAccount"
+              value={formData.bankAccount}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        <Button
-          variant="primary"
-          size="sm"
-          type="submit"
-          className="w-25 mx-auto mt-2 mb-3"
-        >
-          Submit
-        </Button>
-      </Form>
+          <button
+            type="submit"
+            className="btn btn-primary w-25 mx-auto mt-2 mb-3"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
 
       {message && (
-        <div
-          style={{
-            marginTop: "20px",
-            color: message.includes("successfully") ? "green" : "red",
-          }}
-        >
+        <div className="mt-3" style={{ color: message.includes("successfully") ? "green" : "red" }}>
           {message}
         </div>
       )}

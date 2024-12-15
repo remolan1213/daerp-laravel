@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, Unique, } from "typeorm";
 import BankAccount from "./BankAccount.js";
 import CashAdvance from "./CashAdvance.js";
-import PayrollData from "./PayrollData.js";
+import WorkerRate from "./WorkerRate.js";
 let Worker = class Worker {
     id;
     idNumber;
@@ -19,7 +19,7 @@ let Worker = class Worker {
     lastName;
     middleName;
     cashAdvances;
-    payrolls;
+    workerRates;
     bankAccounts;
 };
 __decorate([
@@ -51,9 +51,9 @@ __decorate([
     __metadata("design:type", Array)
 ], Worker.prototype, "cashAdvances", void 0);
 __decorate([
-    OneToMany(() => PayrollData, (payrollData) => payrollData.worker),
+    OneToMany(() => WorkerRate, (workerRate) => workerRate.worker),
     __metadata("design:type", Array)
-], Worker.prototype, "payrolls", void 0);
+], Worker.prototype, "workerRates", void 0);
 __decorate([
     OneToMany(() => BankAccount, (bankAccount) => bankAccount.worker),
     __metadata("design:type", Array)

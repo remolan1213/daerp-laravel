@@ -1,19 +1,21 @@
-import Button from "react-bootstrap/Button";
-import Card from "../components/Card";
+import React from "react";
 
 const Logout = () => {
   return (
-    <Card title={"Logout"}>
-      <p>Are you sure you want to logout?</p>
-      <div className="button-container">
-        <Button variant="dark" size="sm" className="w-25 mb-3">
-          Ok
-        </Button>
-        <Button variant="danger" size="sm" className="w-25 mb-3">
-          Cancel
-        </Button>
+    <div className="card">
+      <div className="card-header">Logout</div>
+      <div className="card-body">
+        <p className="card-text">Are you sure you want to logout?</p>
+        <div className="d-flex justify-content-end">
+          <button type="button" className="btn btn-dark btn-sm me-2">
+            Ok
+          </button>
+          <button type="button" className="btn btn-danger btn-sm">
+            Cancel
+          </button>
+        </div>
       </div>
-    </Card>
+    </div>
   );
 };
 

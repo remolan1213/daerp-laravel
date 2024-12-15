@@ -1,4 +1,5 @@
 // PayrollDisplay.js
+import React from "react";
 const PayrollDisplay = ({ payrollData }) => {
   return (
     <div className="card text-center">
@@ -28,7 +29,7 @@ const PayrollDisplay = ({ payrollData }) => {
             <th>Gross</th>
             <td className="spacer">{payrollData.grossAmount}</td>
             <th>Net</th>
-            <td className="spacer">{payrollData.netAmount}</td>
+            <td className="spacer">{payrollData.grossAmount * 0.7}</td>
           </tr>
           <tr>
             <th></th>
@@ -62,7 +63,7 @@ const PayrollDisplay = ({ payrollData }) => {
             <td></td>
             <td></td>
             <th>Total Amount</th>
-            <td className="spacer">{payrollData.totalAmount}</td>
+            <td className="spacer">{(payrollData.grossAmount * 0.05).toFixed(2)}</td>
           </tr>
         </tbody>
       </table>

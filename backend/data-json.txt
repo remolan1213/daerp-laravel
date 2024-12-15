@@ -1,0 +1,34 @@
+Workers:
+[
+      {  
+    "idNumber": "2020-0105-004",
+    "firstName": "Jake",
+    "lastName": "Gaviola",
+    "middleName": "Bungaos",
+    "department": "Graphics A"
+      },
+      {  
+    "idNumber": "2021-0126-001",
+    "firstName": "Armando",
+    "lastName": "Lanugon",
+    "middleName": "Luib",
+    "department": "Graphics A"
+      }
+]
+  
+ 
+Payrolls:
+{
+    "payrollperiod": "November 1-30, 2024",
+    "payrolldate": "December 13, 2024"
+}
+
+bankAccounts:
+[
+    "AUB 327-011-000114-7" - Jake Gaviola,
+    "AUB 916-10-55635-1   - Armando Lanugon"
+]
+
+Waterfront Media LCC
+Graphics Design Work
+

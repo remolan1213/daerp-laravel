@@ -1,6 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, Relation } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  Relation,
+} from "typeorm";
 import Payroll from "./Payroll";
-import Worker from "./Worker";
+import WorkerRate from "./WorkerRate";
 
 @Entity()
 export default class PayrollData {
@@ -11,16 +17,13 @@ export default class PayrollData {
   description!: string;
 
   @Column()
-  grossmount!: number;
+  grossAmount!: number;
 
   @Column()
-  workerpercentage!: number;
+  sharingPercentage!: number;
 
-  @Column()
-  sharingpercentage!: number;
-
-  @Column()
-  payrollId!: number;
+  // @Column()
+  // payrollId!: number;
 
   @ManyToOne(() => Payroll, (payroll) => payroll.payrollData, {
     onDelete: "CASCADE",
@@ -28,9 +31,9 @@ export default class PayrollData {
   })
   payroll!: Relation<Payroll>;
 
-  @ManyToOne(() => Worker, (worker) => worker.payrolls, {
+  @ManyToOne(() => WorkerRate, (workerRate) => workerRate.payrollDatas, {
     onDelete: "CASCADE",
     onUpdate: "CASCADE",
   })
-  worker!: Relation<Worker>;
+  workerRate!: Relation<WorkerRate>;
 }

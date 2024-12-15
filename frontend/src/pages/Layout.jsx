@@ -1,5 +1,5 @@
 // src/components/Layout.jsx
-// import React from "react";
+import React from "react";
 import { Outlet } from "react-router-dom"; // Outlet will render the matched child route component
 import Navigation from "../components/Navigation"; // Create this component for your menu
 
