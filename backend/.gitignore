@@ -20,6 +20,6 @@ logs/
 # backend/src/migration/*
 
 # SQLite database files
-# data/db.sqlite
+ data/db.sqlite
  
 
