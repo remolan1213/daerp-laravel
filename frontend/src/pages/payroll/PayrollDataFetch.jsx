@@ -28,7 +28,8 @@ const PayrollDataFetch = () => {
         setPayrollData(data);
       })
       .catch((error) => console.error("Error fetching payroll data:", error));
-  }, []);
+  }, []); 
+  console.log(payrollData);
 
   return <PayrollDisplay payrollData={payrollData} />;
 };
