@@ -27,17 +27,38 @@ const PayrollDisplay = ({ payrollData }) => {
             <th>Client</th>
             <td>{payrollData.client}</td>
             <th>Gross</th>
-            <td className="spacer">{payrollData.grossAmount}</td>
+            <td className="spacer">
+              {payrollData.grossAmount.toLocaleString("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+              })}
+            </td>
             <th>Net</th>
-            <td className="spacer">{payrollData.grossAmount * 0.7}</td>
+            <td className="spacer">
+              {(payrollData.netAmount).toLocaleString("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+              })}
+            </td>
           </tr>
           <tr>
             <th></th>
-            <td>{payrollData.client2}</td>
+            {/* <td>{payrollData.client2}</td> */}
             <th></th>
-            <td className="spacer">{payrollData.grossAmount2}</td>
+            <td className="spacer">
+              {/* {payrollData.grossAmount2.toLocaleString("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+              })} */}
+            </td>
+
             <th></th>
-            <td className="spacer">{payrollData.netAmount2}</td>
+            <td className="spacer">
+              {/* {(payrollData.netAmount2).toLocaleString("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+              })} */}
+            </td>
             <td></td>
           </tr>
           <tr></tr>
@@ -54,7 +75,7 @@ const PayrollDisplay = ({ payrollData }) => {
             <td></td>
             <td></td>
             <td></td>
-            <th>Amount</th>
+            <th>Deduction Amount</th>
             <td className="spacer">{payrollData.deductionAmount}</td>
           </tr>
           <tr>
@@ -63,7 +84,12 @@ const PayrollDisplay = ({ payrollData }) => {
             <td></td>
             <td></td>
             <th>Total Amount</th>
-            <td className="spacer">{(payrollData.grossAmount * 0.05).toFixed(2)}</td>
+            <td className="spacer">
+              {(payrollData.totalAmount).toLocaleString("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+              })}
+            </td>
           </tr>
         </tbody>
       </table>

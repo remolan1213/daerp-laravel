@@ -1,5 +1,5 @@
 // PayrollDataFetch.js
-import React,{ useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import PayrollDisplay from "./PayrollDisplay"; // Import the presentational component
 
 const PayrollDataFetch = () => {
@@ -8,18 +8,31 @@ const PayrollDataFetch = () => {
     idNumber: "2020-0105-004",
     bankAccount: "AUB 327-011-000114-7",
     department: "Graphics A",
-    payrollPeriod: "November 1-30, 2024",
-    payrollDate: "December 13, 2024",
+    payrollPeriod: "January 1-31, 2025",
+    payrollDate: "February 14, 2025",
     client: "Graphics Design Work",
-    // client2: "  ",
-    grossAmount: 13948.63,
-    // grossAmount2: "35,466.24",
+    // client2: "Aaron",
+    grossAmount: 24703.22,
+    // grossAmount2: 4687.0,
     netAmount: 0,
-    // netAmount2: "1,773.31",
+    // netAmount2: 0,
     deductions: "None",
     deductionAmount: "0.00",
-    totalAmount: 0,
+    totalAmount: 0.0
   });
+
+  useEffect(() => {
+    const netAmount = parseFloat(payrollData.grossAmount * 0.05);
+    // const netAmount2 = parseFloat(payrollData.grossAmount2 * 0.7);
+    const totalAmount =
+      netAmount - parseFloat(payrollData.deductionAmount);
+    setPayrollData((prevState) => ({
+      ...prevState,
+      netAmount: netAmount,
+      // netAmount2: netAmount2,
+      totalAmount: totalAmount
+    }));
+  }, []);
 
   useEffect(() => {
     fetch("/api/payroll")
@@ -28,7 +41,7 @@ const PayrollDataFetch = () => {
         setPayrollData(data);
       })
       .catch((error) => console.error("Error fetching payroll data:", error));
-  }, []); 
+  }, []);
   console.log(payrollData);
 
   return <PayrollDisplay payrollData={payrollData} />;
