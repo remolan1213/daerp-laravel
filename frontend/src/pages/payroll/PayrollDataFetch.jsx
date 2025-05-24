@@ -8,28 +8,41 @@ const PayrollDataFetch = () => {
     idNumber: "2020-0105-004",
     bankAccount: "AUB 327-011-000114-7",
     department: "Graphics A",
-    payrollPeriod: "January 1-31, 2025",
-    payrollDate: "February 14, 2025",
+    payrollPeriod: "April 1-30, 2025",
+    payrollDate: "May 15, 2025",
     client: "Graphics Design Work",
-    // client2: "Aaron",
-    grossAmount: 24703.22,
-    // grossAmount2: 4687.0,
+    client2: "",
+    grossAmount: 13516.00,
+    grossAmount2: 0,
     netAmount: 0,
-    // netAmount2: 0,
+    netAmount2: 0,
     deductions: "None",
     deductionAmount: "0.00",
-    totalAmount: 0.0
+    totalAmount: 0.0,
+    rate: 0.05
   });
 
   useEffect(() => {
-    const netAmount = parseFloat(payrollData.grossAmount * 0.05);
-    // const netAmount2 = parseFloat(payrollData.grossAmount2 * 0.7);
+    if (payrollData.name === "Jake Gaviola") {
+       payrollData.idNumber = "2020-0105-004",
+       payrollData.bankAccount = "AUB 327-011-000114-7",
+       payrollData.department = "Graphics A"
+       payrollData.rate = 0.05
+    } else {
+       payrollData.idNumber = "2021-0126-001",
+       payrollData.bankAccount = "AUB 916-10-55635-1",
+       payrollData.department = "Graphics A"
+       payrollData.rate = 0.70  
+      
+    }
+    const netAmount = parseFloat(payrollData.grossAmount * payrollData.rate);
+    const netAmount2 = parseFloat(payrollData.grossAmount2 * payrollData.rate);
     const totalAmount =
-      netAmount - parseFloat(payrollData.deductionAmount);
+      netAmount + netAmount2 - parseFloat(payrollData.deductionAmount);
     setPayrollData((prevState) => ({
       ...prevState,
       netAmount: netAmount,
-      // netAmount2: netAmount2,
+      netAmount2: netAmount2,
       totalAmount: totalAmount
     }));
   }, []);

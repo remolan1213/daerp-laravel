@@ -35,32 +35,33 @@ const PayrollDisplay = ({ payrollData }) => {
             </td>
             <th>Net</th>
             <td className="spacer">
-              {(payrollData.netAmount).toLocaleString("en-US", {
+              {payrollData.netAmount.toLocaleString("en-US", {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2
               })}
             </td>
           </tr>
-          <tr>
-            <th></th>
-            {/* <td>{payrollData.client2}</td> */}
-            <th></th>
-            <td className="spacer">
-              {/* {payrollData.grossAmount2.toLocaleString("en-US", {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-              })} */}
-            </td>
-
-            <th></th>
-            <td className="spacer">
-              {/* {(payrollData.netAmount2).toLocaleString("en-US", {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-              })} */}
-            </td>
-            <td></td>
-          </tr>
+          {payrollData.client2 !== "" && (
+            <tr>
+              <th></th>
+              <td>{payrollData.client2}</td>
+              <th></th>
+              <td className="spacer">
+                {payrollData.grossAmount2.toLocaleString("en-US", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                })}
+              </td>
+              <th></th>
+              <td className="spacer">
+                {payrollData.netAmount2.toLocaleString("en-US", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                })}
+              </td>
+              <td></td>
+            </tr>
+          )}
           <tr></tr>
           <tr>
             <td></td>
@@ -85,7 +86,7 @@ const PayrollDisplay = ({ payrollData }) => {
             <td></td>
             <th>Total Amount</th>
             <td className="spacer">
-              {(payrollData.totalAmount).toLocaleString("en-US", {
+              {payrollData.totalAmount.toLocaleString("en-US", {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2
               })}
