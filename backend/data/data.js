@@ -57,7 +57,7 @@ const payrollData = [
     }
 ]
 
-export const fetchPayrollDataByName = (name,)
+// export const fetchPayrollDataByName = (name)
 //     "firstName": "Jake",
 //     "lastName": "Gaviola",
 //     "middleName": "Bungaos",

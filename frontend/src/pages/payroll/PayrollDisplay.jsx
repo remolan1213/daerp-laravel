@@ -72,12 +72,12 @@ const PayrollDisplay = ({ payrollData }) => {
             <td>{payrollData.deductions}</td>
           </tr>
           <tr>
-            <td></td>
-            <td></td>
+            <th>Rate</th>
+            <td className="spacer">{payrollData.rate.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
             <td></td>
             <td></td>
             <th>Deduction Amount</th>
-            <td className="spacer">{payrollData.deductionAmount}</td>
+            <td className="spacer">{payrollData.deductionAmount.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
           </tr>
           <tr>
             <td></td>

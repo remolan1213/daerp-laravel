@@ -4,16 +4,15 @@ import PayrollDisplay from "./PayrollDisplay"; // Import the presentational comp
 
 const PayrollDataFetch = () => {
   const [payrollData, setPayrollData] = useState({
-    name: "Jake Gaviola",
-    idNumber: "2020-0105-004",
+    name: "Jake Gaviola ",
     bankAccount: "AUB 327-011-000114-7",
     department: "Graphics A",
-    payrollPeriod: "April 1-30, 2025",
-    payrollDate: "May 15, 2025",
-    client: "Graphics Design Work",
+    payrollPeriod: "June 1-30, 2025",
+    payrollDate: "July 17, 2025",
+    client: "Graphics Works (July 8, 2025)",
     client2: "",
-    grossAmount: 13516.00,
-    grossAmount2: 0,
+    grossAmount: 13641.72,
+    grossAmount2: 0, 
     netAmount: 0,
     netAmount2: 0,
     deductions: "None",
@@ -23,7 +22,7 @@ const PayrollDataFetch = () => {
   });
 
   useEffect(() => {
-    if (payrollData.name === "Jake Gaviola") {
+    if (payrollData.name.trim() === "Jake Gaviola") {
        payrollData.idNumber = "2020-0105-004",
        payrollData.bankAccount = "AUB 327-011-000114-7",
        payrollData.department = "Graphics A"
@@ -33,7 +32,7 @@ const PayrollDataFetch = () => {
        payrollData.bankAccount = "AUB 916-10-55635-1",
        payrollData.department = "Graphics A"
        payrollData.rate = 0.70  
-      
+    
     }
     const netAmount = parseFloat(payrollData.grossAmount * payrollData.rate);
     const netAmount2 = parseFloat(payrollData.grossAmount2 * payrollData.rate);
