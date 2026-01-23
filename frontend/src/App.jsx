@@ -1,4 +1,6 @@
- import React from "react";
+// import React from "react";
+// eslint-disable no-unused-vars
+import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Layout from "./pages/Layout";
 import Home from "./pages/Home"; // Adjust the path if necessary
@@ -14,18 +16,18 @@ import './style.css';
 
 const App = () => {
   return (
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/payroll" element={<Payroll />} />
-          <Route path="/payrolladd" element={<PayrollAdd />} />
-          <Route path="/personadd" element={<PersonAdd />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/logout" element={<Logout />} />
-          <Route path="/testing" element={<Testing />} />
-        </Route>
-      </Routes>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Home />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/payroll" element={<Payroll />} />
+        <Route path="/payrolladd" element={<PayrollAdd />} />
+        <Route path="/personadd" element={<PersonAdd />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/logout" element={<Logout />} />
+        <Route path="/testing" element={<Testing />} />
+      </Route>
+    </Routes>
   );
 };
 
