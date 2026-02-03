@@ -1,31 +1,46 @@
 import React from "react";
+import PageHeader from "../../components/PageHeader";
+import PageSection from "../../components/PageSection";
+import Toast from "../../components/Toast";
 
 const PersonFormDisplay = ({
   formData,
   handleChange,
   handleSubmit,
   message,
+  isSubmitting,
 }) => {
   return (
     <div>
-      <form onSubmit={handleSubmit} className="card">
-        <div className="card-body">
-          <div className="mb-3">
-            <label className="form-label" htmlFor="firstname">
-              First Name
-            </label>
-            <input
-              className="form-control"
-              type="text"
-              id="firstname"
-              name="firstname"
-              value={formData.firstname}
-              onChange={handleChange}
-              required
-            />
-          </div>
+      <PageHeader
+        title="Add Person"
+        subtitle="Create a new worker profile for payroll."
+      />
+      <Toast
+        open={Boolean(message)}
+        type={message?.type}
+        message={message?.text}
+        onClose={() => message?.clear && message.clear()}
+      />
+      <PageSection title="Person Details" subtitle="Basic identity and bank information.">
+        <form onSubmit={handleSubmit} className="card">
+          <div className="form-grid">
+            <div className="form-field">
+              <label className="form-label" htmlFor="firstname">
+                First Name
+              </label>
+              <input
+                className="form-control"
+                type="text"
+                id="firstname"
+                name="firstname"
+                value={formData.firstname}
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-          <div className="mb-3">
+          <div className="form-field">
             <label className="form-label" htmlFor="middlename">
               Middle Name
             </label>
@@ -39,7 +54,7 @@ const PersonFormDisplay = ({
             />
           </div>
 
-          <div className="mb-3">
+          <div className="form-field">
             <label className="form-label" htmlFor="lastname">
               Last Name
             </label>
@@ -54,7 +69,7 @@ const PersonFormDisplay = ({
             />
           </div>
 
-          <div className="mb-3">
+          <div className="form-field">
             <label className="form-label" htmlFor="idNumber">
               ID Number
             </label>
@@ -69,7 +84,7 @@ const PersonFormDisplay = ({
             />
           </div>
 
-          <div className="mb-3">
+          <div className="form-field">
             <label className="form-label" htmlFor="department">
               Department
             </label>
@@ -84,7 +99,7 @@ const PersonFormDisplay = ({
             />
           </div>
 
-          <div className="mb-3">
+          <div className="form-field">
             <label className="form-label" htmlFor="bankAccount">
               Bank Account
             </label>
@@ -98,19 +113,19 @@ const PersonFormDisplay = ({
               required
             />
           </div>
+          </div>
 
-          <button
-            type="submit"
-            className="btn btn-primary w-25 mx-auto mt-2 mb-3"
-          >
-            Submit
-          </button>
-        </div>
-      </form>
+          <div className="form-actions">
+            <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
+              {isSubmitting ? "Submitting..." : "Submit"}
+            </button>
+          </div>
+        </form>
+      </PageSection>
 
-      {message && (
-        <div className="mt-3" style={{ color: message.includes("successfully") ? "green" : "red" }}>
-          {message}
+      {!message && (
+        <div className="empty-state">
+          Fill out the form to add a new person.
         </div>
       )}
     </div>

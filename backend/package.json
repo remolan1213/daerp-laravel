@@ -8,7 +8,8 @@
     "type-check": "tsc --noEmit",
     "build": "tsc",
     "postbuild": "node add-js-extension.js",
-    "start": "node dist/src/index.js"
+    "start": "node dist/src/index.js",
+    "seed": "tsc && node dist/src/seed.js"
   },
   "keywords": [],
   "author": "Rolando L. Lanugon",

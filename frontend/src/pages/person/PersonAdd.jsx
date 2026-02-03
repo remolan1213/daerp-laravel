@@ -3,17 +3,25 @@ import PersonFormLogic from "./PersonFormLogic";
 import PersonFormDisplay from "./PersonFormDisplay";
 
 const PersonForm = () => {
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState(null);
 
   // Get the logic and handlers from PersonFormLogic
-  const { formData, handleChange, handleSubmit } = PersonFormLogic({ setMessage });
+  const { formData, handleChange, handleSubmit, isSubmitting } = PersonFormLogic({ setMessage });
 
   return (
     <PersonFormDisplay
       formData={formData}
       handleChange={handleChange}
       handleSubmit={handleSubmit}
-      message={message}
+      isSubmitting={isSubmitting}
+      message={
+        message
+          ? {
+              ...message,
+              clear: () => setMessage(null),
+            }
+          : null
+      }
     />
   );
 };

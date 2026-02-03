@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import PageHeader from "../../components/PageHeader";
+import PageSection from "../../components/PageSection";
+import Toast from "../../components/Toast";
 
 const PayrollForm = () => {
   // State for storing form inputs
@@ -14,7 +17,8 @@ const PayrollForm = () => {
   });
 
   // State for managing success or error messages
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Handle input changes
   const handleChange = (e) => {
@@ -30,7 +34,10 @@ const PayrollForm = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:4000/api/payrolls", {
+      setIsSubmitting(true);
+      const payrollsUrl =
+        import.meta.env.VITE_PAYROLLS || "/api/payrolls";
+      const response = await fetch(payrollsUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -39,155 +46,154 @@ const PayrollForm = () => {
       });
 
       if (response.ok) {
-        setMessage(
-          <div className="alert alert-success" role="alert">
-            Payroll added successfully!
-          </div>
-        );
+        setMessage({ type: "success", text: "Payroll added successfully!" });
       } else {
         const errorText = await response.text();
-        setMessage(
-          <div className="alert alert-danger" role="alert">
-            Failed to add payroll: {errorText}
-          </div>
-        );
+        setMessage({
+          type: "error",
+          text: `Failed to add payroll: ${errorText}`,
+        });
       }
     } catch (error) {
-      setMessage(
-        <div className="alert alert-danger" role="alert">
-          Error: Failed to connect to the server. {error.message}
-        </div>
-      );
+      setMessage({
+        type: "error",
+        text: `Error: Failed to connect to the server. ${error.message}`,
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <form
-      className="card"
-      onSubmit={handleSubmit}
-      noValidate={true}
-      autoComplete="off"
-    >
-      <div className="form-group">
-        <label htmlFor="workerId" className="mt-3 ms-2 mb-0">
-          Worker ID
-        </label>
-        <input
-          type="number"
-          name="workerId"
-          className="form-control mt-0 ms-2 me-2 mb-1 w-auto"
-          value={formData.workerId}
-          onChange={handleChange}
-          required
-        />
-      </div>
+    <div>
+      <PageHeader
+        title="Add Payroll"
+        subtitle="Capture a new payroll entry for a worker."
+      />
+      <Toast
+        open={Boolean(message)}
+        type={message?.type}
+        message={message?.text}
+        onClose={() => setMessage(null)}
+      />
+      <PageSection title="Payroll Entry" subtitle="Complete the fields below to save a payroll record.">
+        <form
+          className="card"
+          onSubmit={handleSubmit}
+          noValidate={true}
+          autoComplete="off"
+        >
+          <div className="form-grid">
+            <div className="form-field">
+              <label htmlFor="workerId">Worker ID</label>
+              <input
+                type="number"
+                name="workerId"
+                className="form-control"
+                value={formData.workerId}
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-      <div className="form-group">
-        <label htmlFor="payrollPeriod" className="mt-3 ms-2 mb-0">
-          Payroll Period
-        </label>
-        <input
-          type="text"
-          name="payrollPeriod"
-          className="form-control mt-0 ms-2 me-2 mb-1 w-auto"
-          value={formData.payrollPeriod}
-          onChange={handleChange}
-          required
-        />
-      </div>
+          <div className="form-field">
+            <label htmlFor="payrollPeriod">Payroll Period</label>
+            <input
+              type="text"
+              name="payrollPeriod"
+              className="form-control"
+              value={formData.payrollPeriod}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-      <div className="form-group">
-        <label htmlFor="payrollDate" className="mt-3 ms-2 mb-0">
-          Payroll Date
-        </label>
-        <input
-          type="text"
-          name="payrollDate"
-          className="form-control mt-0 ms-2 me-2 mb-1 w-auto"
-          value={formData.payrollDate}
-          onChange={handleChange}
-          required
-        />
-      </div>
+          <div className="form-field">
+            <label htmlFor="payrollDate">Payroll Date</label>
+            <input
+              type="text"
+              name="payrollDate"
+              className="form-control"
+              value={formData.payrollDate}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-      <div className="form-group">
-        <label htmlFor="grossAmount" className="mt-3 ms-2 mb-0">
-          Gross Amount
-        </label>
-        <input
-          type="number"
-          name="grossAmount"
-          className="form-control mt-0 ms-2 me-2 mb-1 w-auto"
-          value={formData.grossAmount}
-          onChange={handleChange}
-          required
-        />
-      </div>
+          <div className="form-field">
+            <label htmlFor="grossAmount">Gross Amount</label>
+            <input
+              type="number"
+              name="grossAmount"
+              className="form-control"
+              value={formData.grossAmount}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-      <div className="form-group">
-        <label htmlFor="netAmount" className="mt-3 ms-2 mb-0">
-          Net Amount
-        </label>
-        <input
-          type="number"
-          name="netAmount"
-          className="form-control mt-0 ms-2 me-2 mb-1 w-auto"
-          value={formData.netAmount}
-          onChange={handleChange}
-          required
-        />
-      </div>
+          <div className="form-field">
+            <label htmlFor="netAmount">Net Amount</label>
+            <input
+              type="number"
+              name="netAmount"
+              className="form-control"
+              value={formData.netAmount}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-      <div className="form-group">
-        <label htmlFor="deductions" className="mt-3 ms-2 mb-0">
-          Deductions
-        </label>
-        <input
-          type="text"
-          name="deductions"
-          className="form-control mt-0 ms-2 me-2 mb-1 w-auto"
-          value={formData.deductions}
-          onChange={handleChange}
-        />
-      </div>
+          <div className="form-field">
+            <label htmlFor="deductions">Deductions</label>
+            <input
+              type="text"
+              name="deductions"
+              className="form-control"
+              value={formData.deductions}
+              onChange={handleChange}
+            />
+          </div>
 
-      <div className="form-group">
-        <label htmlFor="deductionAmount" className="mt-3 ms-2 mb-0">
-          Deduction Amount
-        </label>
-        <input
-          type="number"
-          name="deductionAmount"
-          className="form-control mt-0 ms-2 me-2 mb-1 w-auto"
-          value={formData.deductionAmount}
-          onChange={handleChange}
-          required
-        />
-      </div>
+          <div className="form-field">
+            <label htmlFor="deductionAmount">Deduction Amount</label>
+            <input
+              type="number"
+              name="deductionAmount"
+              className="form-control"
+              value={formData.deductionAmount}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-      <div className="form-group">
-        <label htmlFor="totalAmount" className="mt-3 ms-2 mb-0">
-          Total Amount
-        </label>
-        <input
-          type="number"
-          name="totalAmount"
-          className="form-control mt-0 ms-2 me-2 mb-1 w-auto"
-          value={formData.totalAmount}
-          onChange={handleChange}
-          required
-        />
-      </div>
+          <div className="form-field">
+            <label htmlFor="totalAmount">Total Amount</label>
+            <input
+              type="number"
+              name="totalAmount"
+              className="form-control"
+              value={formData.totalAmount}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          </div>
 
-      <button
-        type="submit"
-        className="btn btn-primary w-25 mx-auto mt-2 mb-3"
-      >
-        Submit
-      </button>
+          <div className="form-actions">
+            <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
+              {isSubmitting ? "Submitting..." : "Submit"}
+            </button>
+          </div>
 
-      {message && <div style={{ marginTop: "20px" }}>{message}</div>}
-    </form>
+        </form>
+      </PageSection>
+      {!message && (
+        <div className="empty-state">
+          Complete the form to record a payroll entry.
+        </div>
+      )}
+    </div>
   );
 };
 

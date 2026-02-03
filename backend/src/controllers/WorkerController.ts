@@ -1,24 +1,31 @@
-import express,{ Request, RequestHandler, Response} from "express";
+import { Request, Response } from "express";
 import AppDataSource from "../data-source";
 import Worker from "../entities/Worker";
 import { ILike, Repository } from "typeorm";
+import { sendError, sendPaginated } from "../utils/http";
 
 interface WorkerRequestBody {
   idNumber: string;
   department: string;
   bankAccount: string;
-  firstName: string;
-  lastName: string;
-  middleName: string;
+  firstName?: string;
+  lastName?: string;
+  middleName?: string;
+  firstname?: string;
+  lastname?: string;
+  middlename?: string;
 }
 
 interface UpdateWorkerRequestBody {
   newIdNumber?: string;
   department: string;
   bankAccount: string;
-  firstName: string;
-  lastName: string;
-  middleName: string;
+  firstName?: string;
+  lastName?: string;
+  middleName?: string;
+  firstname?: string;
+  lastname?: string;
+  middlename?: string;
 }
 
 // **FUNCTION: CREATE WORKER**
@@ -26,13 +33,27 @@ export const createWorker = async (req: Request, res: Response) => {
   const workerRepository: Repository<Worker> = AppDataSource.getRepository(Worker);
 
   try {
-    const worker = workerRepository.create(req.body as WorkerRequestBody);
+    const body = req.body as WorkerRequestBody;
+    const firstName = body.firstName ?? body.firstname ?? "";
+    const lastName = body.lastName ?? body.lastname ?? "";
+    const middleName = body.middleName ?? body.middlename ?? "";
+    if (!body.idNumber || !body.department || !body.bankAccount || !firstName || !lastName) {
+      return sendError(res, 400, "VALIDATION_ERROR", "Missing required fields");
+    }
+    const worker = workerRepository.create({
+      idNumber: body.idNumber,
+      department: body.department,
+      bankAccount: body.bankAccount,
+      firstName,
+      lastName,
+      middleName,
+    });
     await workerRepository.save(worker);
 
     res.status(201).json(worker);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Error creating worker", error });
+    sendError(res, 500, "WORKER_CREATE_FAILED", "Error creating worker", error);
   }
 };
 
@@ -41,11 +62,29 @@ export const createWorker = async (req: Request, res: Response) => {
 export const getWorkers = async (req: Request, res: Response) => {
   try {
     const workerRepository = AppDataSource.getRepository(Worker);
-    const workers = await workerRepository.find();
-    res.json(workers);
+    const page = Math.max(1, Number(req.query.page) || 1);
+    const limit = Math.min(100, Math.max(1, Number(req.query.limit) || 25));
+    const name = (req.query.name as string | undefined)?.trim();
+
+    const where = name
+      ? [
+          { firstName: ILike(`%${name}%`) },
+          { lastName: ILike(`%${name}%`) },
+          { middleName: ILike(`%${name}%`) },
+        ]
+      : undefined;
+
+    const [workers, total] = await workerRepository.findAndCount({
+      where,
+      order: { id: "DESC" },
+      skip: (page - 1) * limit,
+      take: limit,
+    });
+
+    return sendPaginated(res, workers, page, limit, total);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Error retrieving workers", error });
+    return sendError(res, 500, "WORKER_FETCH_FAILED", "Error retrieving workers", error);
   }
 };
 
@@ -61,12 +100,12 @@ export const getWorkerByidNumber = async (req: Request, res: Response) => {
       where: { idNumber },
     });
     if (!worker) {
-      return res.status(404).json({ message: "Worker not found" });
+      return sendError(res, 404, "WORKER_NOT_FOUND", "Worker not found");
     }
     res.json(worker);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Error retrieving worker", error });
+    return sendError(res, 500, "WORKER_FETCH_FAILED", "Error retrieving worker", error);
   }
 };
 
@@ -83,13 +122,13 @@ export const getWorkerWithPayrolls = async (req: Request, res: Response) => {
     });
 
     if (!worker) {
-      return res.status(404).json({ message: "Worker not found" });
+      return sendError(res, 404, "WORKER_NOT_FOUND", "Worker not found");
     }
 
     res.json(worker);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Error retrieving worker with payrolls", error });
+    return sendError(res, 500, "WORKER_FETCH_FAILED", "Error retrieving worker with payrolls", error);
   }
 };
 
@@ -101,7 +140,7 @@ export const getWorkersWithPayroll = async (req: Request, res: Response) => {
     res.json(workers);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Error retrieving workers with payroll", error });
+    return sendError(res, 500, "WORKER_FETCH_FAILED", "Error retrieving workers with payroll", error);
   }
 };
 
@@ -111,7 +150,7 @@ export const updateWorker = async (
   res: Response
 ) => {
   const { idNumber } = req.params;
-  const { newIdNumber, department, bankAccount, firstName, lastName, middleName } = req.body;
+  const { newIdNumber, department, bankAccount, firstName, lastName, middleName, firstname, lastname, middlename } = req.body;
 
   try {
     const workerRepository = AppDataSource.getRepository(Worker);
@@ -121,24 +160,25 @@ export const updateWorker = async (
     });
 
     if (!worker) {
-      return res.status(404).json({ message: "Worker not found" });
+      return sendError(res, 404, "WORKER_NOT_FOUND", "Worker not found");
     }
 
     if (newIdNumber) {
       worker.idNumber = newIdNumber;
     }
 
-    worker.department = department;
-    worker.firstName = firstName;
-    worker.lastName = lastName;
-    worker.middleName = middleName;
+    worker.department = department ?? worker.department;
+    worker.bankAccount = bankAccount ?? worker.bankAccount;
+    worker.firstName = firstName ?? firstname ?? worker.firstName;
+    worker.lastName = lastName ?? lastname ?? worker.lastName;
+    worker.middleName = middleName ?? middlename ?? worker.middleName;
 
     await workerRepository.save(worker);
 
     res.json(worker);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Error updating worker", error });
+    return sendError(res, 500, "WORKER_UPDATE_FAILED", "Error updating worker", error);
   }
 };
 
@@ -154,7 +194,7 @@ export const deleteWorker = async (
     const worker = await workerRepository.findOne({ where: { idNumber } });
 
     if (!worker) {
-      return res.status(404).json({ message: "Worker not found" });
+      return sendError(res, 404, "WORKER_NOT_FOUND", "Worker not found");
     }
 
     await workerRepository.remove(worker);
@@ -162,7 +202,7 @@ export const deleteWorker = async (
     res.json({ message: "Worker deleted successfully" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Error deleting worker", error });
+    return sendError(res, 500, "WORKER_DELETE_FAILED", "Error deleting worker", error);
   }
 };
 
@@ -171,6 +211,9 @@ export const searchByName = async (req: Request, res: Response) => {
   const { name } = req.query;
 
   try {
+    if (!name || typeof name !== "string") {
+      return sendError(res, 400, "VALIDATION_ERROR", "Missing name query param");
+    }
     const workerRepository = AppDataSource.getRepository(Worker);
     const workers = await workerRepository.find({
       where: [
@@ -183,7 +226,7 @@ export const searchByName = async (req: Request, res: Response) => {
     res.json(workers);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Error searching workers by name", error });
+    return sendError(res, 500, "WORKER_SEARCH_FAILED", "Error searching workers by name", error);
   }
 };
 

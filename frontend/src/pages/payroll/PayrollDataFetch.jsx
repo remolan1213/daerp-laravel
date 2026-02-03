@@ -20,6 +20,10 @@ const PayrollDataFetch = () => {
     totalAmount: 0.0,
     rate: 0.05,
    });
+  const [status, setStatus] = useState({
+    loading: true,
+    error: null,
+  });
 
   useEffect(() => {
     if (payrollData.name.trim() === "Jake Gaviola") {
@@ -46,16 +50,29 @@ const PayrollDataFetch = () => {
   }, []);
 
   useEffect(() => {
-    fetch("/api/payroll")
+    setStatus({ loading: true, error: null });
+    const payrollsUrl =
+      import.meta.env.VITE_PAYROLL_SUMMARY || "/api/payroll";
+    fetch(payrollsUrl)
       .then((response) => response.json())
       .then((data) => {
         setPayrollData(data);
+        setStatus({ loading: false, error: null });
       })
-      .catch((error) => console.error("Error fetching payroll data:", error));
+      .catch((error) => {
+        console.error("Error fetching payroll data:", error);
+        setStatus({ loading: false, error: "Unable to load payroll data." });
+      });
   }, []);
   console.log(payrollData);
 
-  return <PayrollDisplay payrollData={payrollData} />;
+  return (
+    <PayrollDisplay
+      payrollData={payrollData}
+      isLoading={status.loading}
+      error={status.error}
+    />
+  );
 };
 
 export default PayrollDataFetch;

@@ -1,19 +1,29 @@
-// import Button from 'react-bootstrap/Button';
-// import Card from 'react-bootstrap/Card';
+import React from "react";
+import PageHeader from "../components/PageHeader";
+import PageSection from "../components/PageSection";
 
 function Testing() {
   return (
-    <Card style={{ width: '18rem' }}>
-     
-      <Card.Body>
-        <Card.Title style={{margin:'0',backgroundColor:'#17a2b8',color:'white'}}>Testing</Card.Title>
-        <Card.Text style={{textAlign:"left"}}>
-          Some quick example text to build on the card title and make up the
-          bulk of the card's content.
-        </Card.Text>
-        <Button variant="success" style={{border:"solid 2px #17a2b8"}}>Go somewhere</Button>
-      </Card.Body>
-    </Card>
+    <div>
+      <PageHeader
+        title="Testing"
+        subtitle="Preview component styles and layout samples."
+      />
+      <PageSection title="Card Sample" subtitle="Typography and action placement.">
+        <div className="card">
+          <div className="card-header">Testing</div>
+          <div className="card-body">
+            <p className="card-text">
+              Some quick example text to build on the card title and make up the
+              bulk of the card&apos;s content.
+            </p>
+            <button type="button" className="btn btn-success">
+              Go somewhere
+            </button>
+          </div>
+        </div>
+      </PageSection>
+    </div>
   );
 }
 

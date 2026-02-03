@@ -1,5 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import PayrollData from './PayrollData';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, Relation } from 'typeorm';
+import Worker from './Worker';
 
 @Entity()
 export default class Payroll {
@@ -9,9 +9,43 @@ export default class Payroll {
   @Column()
   payrollPeriod!: string;
 
-  @Column({ unique: true })
-  payrollDate!: Date;  
+  @Column()
+  payrollDate!: string;
 
-  @OneToMany(() => PayrollData, payrollData => payrollData.payroll)
-  payrollData!: PayrollData[];
+  @Column({ nullable: true })
+  client!: string;
+
+  @Column({ nullable: true })
+  client2!: string;
+
+  @Column({ type: "real", default: 0 })
+  grossAmount!: number;
+
+  @Column({ type: "real", default: 0 })
+  grossAmount2!: number;
+
+  @Column({ type: "real", default: 0 })
+  netAmount!: number;
+
+  @Column({ type: "real", default: 0 })
+  netAmount2!: number;
+
+  @Column({ default: "" })
+  deductions!: string;
+
+  @Column({ type: "real", default: 0 })
+  deductionAmount!: number;
+
+  @Column({ type: "real", default: 0 })
+  totalAmount!: number;
+
+  @Column({ type: "real", default: 0 })
+  rate!: number;
+
+  @ManyToOne(() => Worker, (worker) => worker.payrolls, {
+    onDelete: "SET NULL",
+    onUpdate: "CASCADE",
+    nullable: true,
+  })
+  worker!: Relation<Worker>;
 }

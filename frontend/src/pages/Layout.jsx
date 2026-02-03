@@ -5,16 +5,17 @@ import Navigation from "../components/Navigation"; // Create this component for 
 
 const Layout = () => {
   return (
-      <main>
-        <div className="glass">
-          <Navigation /> {/* Common Navigation Bar */}
-          <div>
+    <main>
+      <div className="glass">
+        <Navigation /> {/* Common Navigation Bar */}
+        <div className="page-content">
+          <div className="page-inner">
             <Outlet /> {/* This is where routed components will be rendered */}
           </div>
         </div>
-      </main>
+      </div>
+    </main>
   );
 };
 
 export default Layout;
-

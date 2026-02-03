@@ -10,6 +10,7 @@ const PersonFormLogic = ({ setMessage }) => {
     department: "",
     bankAccount: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Handle input changes
   const handleChange = (e) => {
@@ -25,6 +26,7 @@ const PersonFormLogic = ({ setMessage }) => {
     e.preventDefault();
 
     try {
+      setIsSubmitting(true);
       const response = await fetch(import.meta.env.VITE_WORKERS, {
         method: "POST",
         headers: {
@@ -34,12 +36,14 @@ const PersonFormLogic = ({ setMessage }) => {
       });
 
       if (response.ok) {
-        setMessage("Person added successfully!");
+        setMessage({ type: "success", text: "Person added successfully!" });
       } else {
-        setMessage("Failed to add Person. Please try again.");
+        setMessage({ type: "error", text: "Failed to add Person. Please try again." });
       }
     } catch (error) {
-      setMessage("Error: Failed to connect to the server.");
+      setMessage({ type: "error", text: "Error: Failed to connect to the server." });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -47,6 +51,7 @@ const PersonFormLogic = ({ setMessage }) => {
     formData,
     handleChange,
     handleSubmit,
+    isSubmitting,
   };
 };
 

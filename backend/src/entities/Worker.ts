@@ -5,10 +5,7 @@ import {
   OneToMany,
   Unique,
 } from "typeorm";
-import  BankAccount  from "./BankAccount";
-import CashAdvance from "./CashAdvance";
-import PayrollData from "./PayrollData";
-import WorkerRate from "./WorkerRate";
+import Payroll from "./Payroll";
 
 @Entity()
 @Unique("unique_id_number", ["idNumber"])
@@ -31,12 +28,9 @@ export default class Worker {
   @Column({ length: 25 })
   middleName!: string;
 
-  @OneToMany(() => CashAdvance, (cashAdvance) => cashAdvance.worker)
-  cashAdvances!: CashAdvance[];
+  @Column({ length: 60 })
+  bankAccount!: string;
 
-  @OneToMany(() => WorkerRate, (workerRate) => workerRate.worker)
-  workerRates!: WorkerRate[];
-
-  @OneToMany(() => BankAccount, (bankAccount) => bankAccount.worker)
-  bankAccounts!: BankAccount[];
+  @OneToMany(() => Payroll, (payroll) => payroll.worker)
+  payrolls!: Payroll[];
 }
