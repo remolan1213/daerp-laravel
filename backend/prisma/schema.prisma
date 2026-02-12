@@ -1,0 +1,190 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  HR
+  ACCOUNTING
+}
+
+enum CashAdvanceStatus {
+  OPEN
+  SETTLED
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  role         Role
+  createdAt    DateTime @default(now())
+
+  setting UserSetting?
+}
+
+model Employee {
+  id               String   @id @default(uuid())
+  employeeCode     String   @unique
+  firstName        String
+  lastName         String
+  employmentType   String
+  salaryType       String
+  basicSalary      Decimal  @db.Decimal(12,2)
+  tin              String?
+  sssNumber        String?
+  philhealthNumber String?
+  pagibigNumber    String?
+  dateHired        DateTime
+  isActive         Boolean  @default(true)
+  createdAt        DateTime @default(now())
+
+  payrolls    Payroll[]
+  attendances AttendanceRecord[]
+  cashAdvances CashAdvance[]
+}
+
+model PayrollPeriod {
+  id          String   @id @default(uuid())
+  startDate   DateTime
+  endDate     DateTime
+  cutoffType  String
+  year        Int
+  isFinalized Boolean  @default(false)
+
+  payrolls Payroll[]
+}
+
+model AttendanceRecord {
+  id            String   @id @default(uuid())
+  employeeId    String
+  employee      Employee @relation(fields: [employeeId], references: [id])
+  date          DateTime
+  hoursWorked   Decimal  @db.Decimal(5,2)
+  overtimeHours Decimal  @db.Decimal(5,2)
+  nightHours    Decimal  @db.Decimal(5,2)
+  isRestDay     Boolean  @default(false)
+  holidayType   String?
+}
+
+model Payroll {
+  id         String        @id @default(uuid())
+  employeeId String
+  periodId   String
+
+  employee Employee      @relation(fields: [employeeId], references: [id])
+  period   PayrollPeriod @relation(fields: [periodId], references: [id])
+  governmentRateTableId String?
+  governmentRateTable GovernmentRateTable? @relation(fields: [governmentRateTableId], references: [id])
+
+  basicPay     Decimal @db.Decimal(12,2)
+  overtimePay  Decimal @db.Decimal(12,2)
+  holidayPay   Decimal @db.Decimal(12,2)
+  nightDiffPay Decimal @db.Decimal(12,2)
+
+  grossPay Decimal @db.Decimal(12,2)
+
+  sssEmployee        Decimal @db.Decimal(12,2)
+  sssEmployer        Decimal @db.Decimal(12,2)
+  philhealthEmployee Decimal @db.Decimal(12,2)
+  philhealthEmployer Decimal @db.Decimal(12,2)
+  pagibigEmployee    Decimal @db.Decimal(12,2)
+  pagibigEmployer    Decimal @db.Decimal(12,2)
+
+  withholdingTax  Decimal @db.Decimal(12,2)
+  cashAdvanceDeduction Decimal @db.Decimal(12,2)
+  totalDeductions Decimal @db.Decimal(12,2)
+  netPay          Decimal @db.Decimal(12,2)
+
+  ytdGross Decimal @db.Decimal(14,2)
+  ytdTax   Decimal @db.Decimal(14,2)
+
+  createdAt DateTime @default(now())
+
+  cashAdvanceDeductions PayrollCashAdvance[]
+
+  @@unique([employeeId, periodId])
+  @@index([employeeId])
+  @@index([periodId])
+}
+
+model CashAdvance {
+  id                String   @id @default(uuid())
+  employeeId        String
+  employee          Employee @relation(fields: [employeeId], references: [id])
+  amount            Decimal  @db.Decimal(12,2)
+  balance           Decimal  @db.Decimal(12,2)
+  installmentAmount Decimal  @db.Decimal(12,2)
+  reason            String
+  status            CashAdvanceStatus @default(OPEN)
+  grantedAt         DateTime
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  deductions PayrollCashAdvance[]
+}
+
+model PayrollCashAdvance {
+  id            String   @id @default(uuid())
+  payrollId     String
+  cashAdvanceId String
+  amountApplied Decimal  @db.Decimal(12,2)
+  createdAt     DateTime @default(now())
+
+  payroll     Payroll     @relation(fields: [payrollId], references: [id])
+  cashAdvance CashAdvance @relation(fields: [cashAdvanceId], references: [id])
+
+  @@index([payrollId])
+  @@index([cashAdvanceId])
+}
+
+model GovernmentRateTable {
+  id                     String   @id @default(uuid())
+  name                   String
+  effectiveFrom          DateTime
+  effectiveTo            DateTime?
+  sssEmployeeRate        Decimal  @db.Decimal(6,4)
+  sssEmployerRate        Decimal  @db.Decimal(6,4)
+  sssMaxContributionBase Decimal  @db.Decimal(12,2)
+  philhealthRate         Decimal  @db.Decimal(6,4)
+  philhealthMinBase      Decimal  @db.Decimal(12,2)
+  philhealthMaxBase      Decimal  @db.Decimal(12,2)
+  pagibigEmployeeRate    Decimal  @db.Decimal(6,4)
+  pagibigEmployerRate    Decimal  @db.Decimal(6,4)
+  pagibigMaxContribution Decimal  @db.Decimal(12,2)
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+
+  taxBrackets WithholdingTaxBracket[]
+  payrolls    Payroll[]
+}
+
+model WithholdingTaxBracket {
+  id                     String   @id @default(uuid())
+  governmentRateTableId  String
+  governmentRateTable    GovernmentRateTable @relation(fields: [governmentRateTableId], references: [id])
+  minMonthlyCompensation Decimal  @db.Decimal(12,2)
+  maxMonthlyCompensation Decimal? @db.Decimal(12,2)
+  baseTax                Decimal  @db.Decimal(12,2)
+  marginalRate           Decimal  @db.Decimal(6,4)
+  orderNo                Int
+  createdAt              DateTime @default(now())
+
+  @@index([governmentRateTableId])
+  @@unique([governmentRateTableId, orderNo])
+}
+
+model UserSetting {
+  id        String   @id @default(uuid())
+  userId    String   @unique
+  theme     String   @default("night-ops")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+}

@@ -1,34 +1,81 @@
-// import React from "react";
-// eslint-disable no-unused-vars
-import React from "react";
-import { Routes, Route } from "react-router-dom";
-import Layout from "./pages/Layout";
-import Home from "./pages/Home"; // Adjust the path if necessary
-import Profile from "./pages/Profile"; // Adjust the path if necessary
-import Payroll from "./pages/payroll/Payroll"; // Adjust the path if necessary
-import PayrollAdd from "./pages/payroll/PayrollAdd"; // Adjust the path if necessary
-import Settings from "./pages/Settings"; // Adjust the path if necessary
-import PersonAdd from "./pages/person/PersonAdd";
-import Logout from "./pages/Logout";
-import Testing from "./pages/Testing";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './style.css';
+import { Routes, Route, Navigate, NavLink, useNavigate } from "react-router-dom";
+import Login from "./modules/auth/Login";
+import Dashboard from "./modules/dashboard/Dashboard";
+import Employees from "./modules/employees/Employees";
+import Payroll from "./modules/payroll/Payroll";
+import Attendance from "./modules/attendance/Attendance";
 
-const App = () => {
+function PrivateRoute({ children }) {
+  const token = localStorage.getItem("token");
+  return token ? children : <Navigate to="/login" />;
+}
+
+const NAV_ITEMS = [
+  { to: "/", label: "Dashboard", badge: "DB" },
+  { to: "/employees", label: "Employees", badge: "EM" },
+  { to: "/attendance", label: "Attendance", badge: "AT" },
+  { to: "/payroll", label: "Payroll", badge: "PR" }
+];
+
+function Layout({ children }) {
+  const navigate = useNavigate();
+
+  return (
+    <div className="app-shell">
+      <aside className="sidebar">
+        <div>
+          <div className="sidebar-title">DAERP</div>
+          <div className="sidebar-subtitle">Payroll Operations</div>
+        </div>
+        <nav className="nav-list">
+          {NAV_ITEMS.map((item) => (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              end={item.to === "/"}
+              className={({ isActive }) =>
+                `nav-item ${isActive ? "active" : ""}`
+              }
+            >
+              <span className="nav-kicker">{item.badge}</span>
+              <span>{item.label}</span>
+            </NavLink>
+          ))}
+        </nav>
+      </aside>
+
+      <div className="main-area">
+        <header className="topbar">
+          <div>
+            <div className="topbar-title">Enterprise Payroll Console</div>
+            <div className="topbar-sub">Monitoring, Attendance, and Payroll Runs</div>
+          </div>
+          <button
+            className="button secondary"
+            onClick={() => {
+              localStorage.removeItem("token");
+              navigate("/login");
+            }}
+          >
+            Logout
+          </button>
+        </header>
+
+        <main className="content-area">{children}</main>
+      </div>
+    </div>
+  );
+}
+
+export default function App() {
   return (
     <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/payroll" element={<Payroll />} />
-        <Route path="/payrolladd" element={<PayrollAdd />} />
-        <Route path="/personadd" element={<PersonAdd />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="/logout" element={<Logout />} />
-        <Route path="/testing" element={<Testing />} />
-      </Route>
+      <Route path="/login" element={<Login />} />
+      <Route path="/" element={<PrivateRoute><Layout><Dashboard /></Layout></PrivateRoute>} />
+      <Route path="/employees" element={<PrivateRoute><Layout><Employees /></Layout></PrivateRoute>} />
+      <Route path="/attendance" element={<PrivateRoute><Layout><Attendance /></Layout></PrivateRoute>} />
+      <Route path="/payroll" element={<PrivateRoute><Layout><Payroll /></Layout></PrivateRoute>} />
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
-};
-
-export default App;
+}

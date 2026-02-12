@@ -1,0 +1,26 @@
+name: Tutorials - Go
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'tutorials/projects/go/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+      - name: Run tests
+        run: |
+          set -e
+          for d in tutorials/projects/go/*; do
+            if [ -d "$d" ]; then
+              echo "Testing $d"
+              cd "$d"
+              go test ./...
+              cd -
+            fi
+          done

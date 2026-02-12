@@ -1,30 +1,38 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "type": "module",
-  "description": "backend",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "type-check": "tsc --noEmit",
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "build": "tsc",
-    "postbuild": "node add-js-extension.js",
-    "start": "node dist/src/index.js",
-    "seed": "tsc && node dist/src/seed.js"
+    "start": "node dist/server.js",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate deploy"
   },
   "keywords": [],
-  "author": "Rolando L. Lanugon",
+  "author": "",
   "license": "ISC",
+  "type": "commonjs",
   "dependencies": {
-    "cors": "^2.8.5",
-    "dotenv": "^16.0.1",
-    "express": "^4.21.1",
-    "sqlite3": "^5.1.7",
-    "typeorm": "^0.3.20"
+    "@prisma/client": "^6.19.2",
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.2.4",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.2.1",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.3",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@types/cors": "^2.8.17",
-    "@types/dotenv": "^6.1.1",
-    "@types/express": "^4.17.17",
-    "typescript": "^5.7.2"
+    "@types/bcrypt": "^6.0.0",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^25.2.3",
+    "prisma": "^6.19.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.9.3"
   }
 }

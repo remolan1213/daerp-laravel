@@ -1,0 +1,102 @@
+name: Tutorials - All
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'tutorials/**'
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        lang: [python, reactjs, rust, go, c, cpp]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup
+        run: |
+          case "${{ matrix.lang }}" in
+            python)
+              echo "Using system Python"
+              ;;
+            reactjs)
+              echo "Installing Node"
+              ;;
+            rust)
+              echo "Installing Rust"
+              ;;
+            go)
+              echo "Installing Go"
+              ;;
+            c|cpp)
+              echo "Installing build tools"
+              ;;
+          esac
+      - name: Setup Python
+        if: matrix.lang == 'python'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Setup Node
+        if: matrix.lang == 'reactjs'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Setup Rust
+        if: matrix.lang == 'rust'
+        uses: dtolnay/rust-toolchain@stable
+      - name: Setup Go
+        if: matrix.lang == 'go'
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+      - name: Install build tools
+        if: matrix.lang == 'c' || matrix.lang == 'cpp'
+        run: |
+          sudo apt-get update
+          if [ "${{ matrix.lang }}" = "c" ]; then
+            sudo apt-get install -y build-essential
+          else
+            sudo apt-get install -y build-essential cmake
+          fi
+      - name: Run tests
+        run: |
+          set -e
+          LANG_DIR="tutorials/projects/${{ matrix.lang }}"
+          for d in $LANG_DIR/*; do
+            if [ -d "$d" ]; then
+              echo "Testing $d"
+              cd "$d"
+              case "${{ matrix.lang }}" in
+                python)
+                  if [ -f pyproject.toml ]; then
+                    python -m pip install --upgrade pip
+                    python -m pip install pytest
+                    python -m pytest
+                  fi
+                  ;;
+                reactjs)
+                  npm install
+                  npm run test -- --run
+                  ;;
+                rust)
+                  cargo test
+                  ;;
+                go)
+                  go test ./...
+                  ;;
+                c)
+                  make
+                  if [ -d tests ]; then
+                    make -C tests
+                  fi
+                  ;;
+                cpp)
+                  cmake -S . -B build
+                  cmake --build build
+                  cmake --build build --target test_smoke
+                  ;;
+              esac
+              cd -
+            fi
+          done

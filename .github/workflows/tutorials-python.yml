@@ -1,0 +1,30 @@
+name: Tutorials - Python
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'tutorials/projects/python/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run tests
+        run: |
+          set -e
+          for d in tutorials/projects/python/*; do
+            if [ -d "$d" ]; then
+              echo "Testing $d"
+              cd "$d"
+              if [ -f pyproject.toml ]; then
+                python -m pip install --upgrade pip
+                python -m pip install pytest
+                python -m pytest
+              fi
+              cd -
+            fi
+          done

@@ -1,0 +1,24 @@
+name: Tutorials - Rust
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'tutorials/projects/rust/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Run tests
+        run: |
+          set -e
+          for d in tutorials/projects/rust/*; do
+            if [ -d "$d" ]; then
+              echo "Testing $d"
+              cd "$d"
+              cargo test
+              cd -
+            fi
+          done

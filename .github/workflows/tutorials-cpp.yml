@@ -1,0 +1,27 @@
+name: Tutorials - C++
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'tutorials/projects/cpp/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run tests
+        run: |
+          set -e
+          sudo apt-get update
+          sudo apt-get install -y build-essential cmake
+          for d in tutorials/projects/cpp/*; do
+            if [ -d "$d" ]; then
+              echo "Testing $d"
+              cd "$d"
+              cmake -S . -B build
+              cmake --build build
+              cmake --build build --target test_smoke
+              cd -
+            fi
+          done

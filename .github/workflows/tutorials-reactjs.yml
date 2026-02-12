@@ -1,0 +1,27 @@
+name: Tutorials - ReactJS
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'tutorials/projects/reactjs/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Run tests
+        run: |
+          set -e
+          for d in tutorials/projects/reactjs/*; do
+            if [ -d "$d" ]; then
+              echo "Testing $d"
+              cd "$d"
+              npm install
+              npm run test -- --run
+              cd -
+            fi
+          done

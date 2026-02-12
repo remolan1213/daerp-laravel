@@ -1,25 +1,5 @@
-# Node.js dependencies
-node_modules/
+node_modules
+# Keep environment variables out of version control
+.env
 
-# Build output
-# dist/
-
-# Environment variable files
-#.env
-
-# Logs
-logs/
-*.log
-
-# Temporary files
-*.pid
-*.seed
-*.swp
-
-# TypeORM migration files
-# backend/src/migration/*
-
-# SQLite database files
- data/db.sqlite
- 
-
+/generated/prisma

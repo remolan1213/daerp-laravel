@@ -1,0 +1,22 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.app = void 0;
+const express_1 = __importDefault(require("express"));
+const cors_1 = __importDefault(require("cors"));
+const helmet_1 = __importDefault(require("helmet"));
+const express_rate_limit_1 = __importDefault(require("express-rate-limit"));
+const auth_routes_1 = __importDefault(require("./modules/auth/auth.routes"));
+const employee_routes_1 = __importDefault(require("./modules/employees/employee.routes"));
+const error_handler_1 = require("./core/error-handler");
+const env_1 = require("./config/env");
+exports.app = (0, express_1.default)();
+exports.app.use((0, helmet_1.default)());
+exports.app.use((0, cors_1.default)({ origin: env_1.env.CORS_ORIGIN }));
+exports.app.use(express_1.default.json());
+exports.app.use((0, express_rate_limit_1.default)({ windowMs: 15 * 60 * 1000, max: 100 }));
+exports.app.use("/auth", auth_routes_1.default);
+exports.app.use("/employees", employee_routes_1.default);
+exports.app.use(error_handler_1.errorHandler);
